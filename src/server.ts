@@ -2,7 +2,6 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as session from 'express-session';
 import * as mongoose from 'mongoose';
-import * as passport from 'passport';
 
 const app = express();
 
@@ -19,5 +18,3 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({"secret" : "cats"}));
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(passport.initialize());
-app.use(passport.session());

@@ -1,15 +1,40 @@
-import { Schema, PassportLocalSchema, PassportLocalDocument, model } from 'mongoose';
-import * as passportLocalMongoose from 'passport-local-mongoose';
+import { prop, Typegoose, ModelType, InstanceType, pre, instanceMethod } from 'typegoose';
+import * as mongoose from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
-import { IUser, UserModel } from '../interfaces';
+const SALT_WORK_FACTOR = 10; // Must go on secret config
 
-const UserSchema = new Schema({
-	name: String,
-	age: Number,
-	sex: Boolean,
-}) as PassportLocalSchema;
 
-UserSchema.plugin(passportLocalMongoose);
+@pre<User>('save', function(next) {
+    if(!this.isModified('password')) next();
+    bcrypt.genSalt(SALT_WORK_FACTOR).then((salt) => {
+        return bcrypt.hash(this.password, salt);
+    }).then((hash) => {
+        this.password = hash;
+        next();
+    }).catch((err) => {
+        next(err);
+    });
+})
+export class User extends Typegoose {
+  @prop({ required: true})
+  username: string;
 
-const User: UserModel<IUser> = model<IUser>('User, UserSchema');
-export default User;
+  @prop({ required: true})
+  password: string;
+
+  @prop()
+  salt: string;
+
+  @prop({ required: true })
+  age: number;
+
+  @instanceMethod
+  async validatePassword(this: InstanceType<User>, password: String): Promise<Boolean> {
+      console.log(this.salt);
+      console.log(password)
+      return await bcrypt.compare(password, this.password)
+  }
+}
+const UserModel = new User().getModelForClass(User);
+export default UserModel;
