@@ -16,10 +16,11 @@ const SALT_WORK_FACTOR = 10; // Must go on secret config
         next(err);
     });
 })
+
 export class User extends Typegoose {
   @prop({ required: true})
   username: string;
-
+  
   @prop({ required: true})
   password: string;
 
@@ -36,5 +37,6 @@ export class User extends Typegoose {
       return await bcrypt.compare(password, this.password)
   }
 }
+
 const UserModel = new User().getModelForClass(User);
 export default UserModel;
