@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "./node_modules/.bin/webpack-dev-server --hot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -11,19 +12,26 @@
   "dependencies": {
     "@types/react": "^16.0.19",
     "@types/react-dom": "^16.0.2",
+    "history": "^4.7.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.8",
     "redux": "^3.7.2",
     "semantic-ui-react": "^0.75.1"
   },
   "devDependencies": {
+    "@types/react-redux": "^5.0.12",
     "@types/react-router": "^4.0.16",
     "@types/react-router-dom": "^4.2.0",
+    "@types/react-router-redux": "^5.0.7",
+    "@types/redux": "^3.6.0",
     "awesome-typescript-loader": "^3.3.0",
     "source-map-loader": "^0.2.3",
-    "typescript": "^2.6.1"
+    "typescript": "^2.6.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
   }
 }

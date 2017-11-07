@@ -1,8 +1,14 @@
 import * as React from 'react';
 
 import { Form, Checkbox, Button } from 'semantic-ui-react';
+import { store } from '../../index';
+import { routerActions } from 'react-router-redux';
 
-const LoginForm = () => (
+import { login } from '../../api/user';
+function increase() {
+  store.dispatch(routerActions.push('/'))
+}
+const Login = () => (
     <Form>
       <Form.Field>
         <label>First Name</label>
@@ -15,8 +21,9 @@ const LoginForm = () => (
       <Form.Field>
         <Checkbox label='I agree to the Terms and Conditions' />
       </Form.Field>
-      <Button type='submit'>Submit</Button>
+      <Button type='submit' onClick={() => login('test', 'test')}>Submit</Button>
+      <Button onClick={() => increase()}>Go back</Button>
     </Form>
   )
   
-  export default LoginForm;
+  export default Login;
