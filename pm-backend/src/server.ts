@@ -18,3 +18,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({"secret" : "cats"}));
 app.use(bodyParser.urlencoded({extended: false}));
+
+app.get('/', function (req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*')  
+  res.setHeader('Content-Type', 'application/json');
+  res.send({hello: 'Hi i am josh'})
+});
+
+app.post('/login', function (req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*')  
+  res.setHeader('Content-Type', 'application/json');
+  res.send({hello: 'Hi i am josh'})
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
+})
