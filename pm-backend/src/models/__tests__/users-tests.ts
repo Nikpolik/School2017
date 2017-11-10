@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-import UserModel, { User } from '../user';
+import UserModel, { User } from '../user.model';
 
 mongoose.connect('mongodb://localhost/test');
 

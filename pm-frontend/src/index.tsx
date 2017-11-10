@@ -7,18 +7,26 @@ import { Provider } from 'react-redux'
 import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter as Router, routerReducer, routerMiddleware, push } from 'react-router-redux'
 
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-import NavBar from './components/navigation/Navbar';
+import thunk from 'redux-thunk';
+
+import NavBar from './components/navigation/navbar.component';
 import Routes from './routes';
+
+import loginReducer from './reducers/login.reducer'
+import appReducer from './reducers/reducer';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
 
+
 const store = createStore(
   combineReducers({
+    app: appReducer,    
     router: routerReducer
   }),
-  applyMiddleware(middleware)
+  composeWithDevTools(applyMiddleware(middleware, thunk))
 );
 
 const App: React.StatelessComponent = () => (

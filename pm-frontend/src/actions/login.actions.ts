@@ -38,8 +38,8 @@ export function loginSuccess(user: string) {
 export function login(username: string, password: string) {
    return (dispatch: Dispatch<any>) => {
         dispatch(loginStart());
-        userApi.login(username, password).then((what) => {
-            console.log(what);
+        userApi.login(username, password).then((response) => {
+            console.log(response);
             dispatch(loginSuccess('fuck off'));            
         }).catch((reason) => {
             dispatch(loginFail(reason));

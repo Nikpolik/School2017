@@ -13,13 +13,27 @@ const initialState: loginState = {
     user: null
 };
 
-function login(state = initialState, action: Action) {
+export default function loginReducer(state = initialState, action: Action) {
     switch(action.type) {
         case loginActions.LOGIN_START:
             return Object.assign({}, state, {
                 startedLogin: true,
-                failedLogin: false
+                failedLogin: false,
+                user: null
             });
-        case loginActions.
+        case loginActions.LOGIN_SUCCESS:
+            return Object.assign({}, state, {
+                startedLogin: false,
+                failedLogin: false,
+                user: 'testUser'
+            });
+        case loginActions.LOGIN_FAIL:
+            return Object.assign({}, state, {
+                startedLogin: false,
+                failedLogin: true,
+                user: null
+            });
+        default:
+            return initialState;
     }
 }
