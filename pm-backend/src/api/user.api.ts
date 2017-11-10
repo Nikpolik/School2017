@@ -1,9 +1,9 @@
 import * as jswt from 'jsonwebtoken';
 import { user } from '../models/index';
 import config from '../config';
-import { FormValidation } from '../interfaces';
+import { FormValidation, UserForm } from '../interfaces';
 
-export function authenticate(name: string, password: string): Promise<String | undefined> {
+export async function authenticate(name: string, password: string): Promise<String | undefined> {
     return user.UserModel.findOne({username: name}).then((user) => {
         if(user) {
             return user.validatePassword(password);
@@ -18,16 +18,35 @@ export function authenticate(name: string, password: string): Promise<String | u
             return jswt.sign(payload, config.secret, {
                 expiresIn: 1440
             });
+        } else {
+            throw new Error('Wrong password');
         }
     });
 }
 
-export function register(userForm: user.User, confirmPassword: string): FormValidation {
-    if(userForm.password !== confirmPassword) {
+export async function register(userForm: UserForm): Promise<FormValidation> {
+    if(userForm.password.length < 6) {
         return {
             sucess: false,
             field: ['password']
+        }
+    }
+    if(userForm.password !== userForm.confirmPassword) {
+        return {
+            sucess: false,
+            field: ['confirmPassword']
         };
     }
+    const u = new user.UserModel({username:userForm.username, password: userForm.password});
+    return u.save().then((_) => {
+        return({
+            sucess: true
+        });
+    }).catch((reason) => {
+        return({
+            sucess: false,
+            reason
+        })
+    });
     
 }

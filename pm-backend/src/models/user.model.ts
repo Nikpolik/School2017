@@ -26,7 +26,7 @@ class User extends Typegoose {
   @prop()
   salt: string;
 
-  @prop({ required: true })
+  @prop()
   age: number;
 
   @instanceMethod

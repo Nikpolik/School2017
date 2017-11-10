@@ -6,7 +6,9 @@ import * as morgan from 'morgan';
 
 import config from './config';
 
-const app = express();
+import {userRoutes, secretRoutes} from './routes/index';
+
+const app: express.Application = express();
 
 mongoose.connect(config.database);
 
@@ -27,6 +29,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(morgan('dev'));
 
+app.use(userRoutes);
+app.use('/secret', secretRoutes);
 app.get('/', function (req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')  
   res.setHeader('Content-Type', 'application/json');
@@ -34,13 +38,15 @@ app.get('/', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
+  console.log('???');
   res.setHeader('Access-Control-Allow-Origin', '*')  
   res.setHeader('Content-Type', 'application/json');
-  setTimeout(() => res.send({hello: 'Hi i am josh'}), 20000);
+  setTimeout(() => res.send({hello: 'Hi i am josh'}), 2000);
 });
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
+
 
 export default app;
