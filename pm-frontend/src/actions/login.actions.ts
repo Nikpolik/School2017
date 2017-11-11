@@ -30,7 +30,7 @@ export function loginFail(reason: any): LoginFail {
 
 export function loginSuccess(user: string) {
     return({
-        type: 'LOGIN_SUCESS',
+        type: 'LOGIN_SUCCESS',
         user
     });
 }
@@ -39,10 +39,12 @@ export function login(username: string, password: string) {
    return (dispatch: Dispatch<any>) => {
         dispatch(loginStart());
         userApi.login(username, password).then((response) => {
-            console.log(response);
-            dispatch(loginSuccess('fuck off'));            
+            if(response.sucess == false) {
+                throw new Error('Wrong password or username');
+            }
+            dispatch(loginSuccess(response.token));            
         }).catch((reason) => {
-            dispatch(loginFail(reason));
+            dispatch(loginFail(reason.message));
         });
    }
 };

@@ -1,16 +1,12 @@
 import * as loginActions from '../actions/login.actions';
 import { Action } from 'redux';
+import { LoginState } from '../interfaces';
+const user = localStorage.getItem('user');
 
-export interface loginState {
+const initialState: LoginState = {
     startedLogin: false,
     failedLogin: false,
-    user: string | null;
-};
-
-const initialState: loginState = {
-    startedLogin: false,
-    failedLogin: false,
-    user: null
+    user
 };
 
 export default function loginReducer(state = initialState, action: Action) {
@@ -22,10 +18,12 @@ export default function loginReducer(state = initialState, action: Action) {
                 user: null
             });
         case loginActions.LOGIN_SUCCESS:
+            const loginAction = action as loginActions.LoginSuccess;
+            console.log(loginAction.user);
             return Object.assign({}, state, {
                 startedLogin: false,
                 failedLogin: false,
-                user: 'testUser'
+                user: loginAction.user
             });
         case loginActions.LOGIN_FAIL:
             return Object.assign({}, state, {
