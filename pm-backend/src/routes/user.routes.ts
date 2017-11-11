@@ -6,6 +6,7 @@ const userRoutes: Router = Router();
 
 userRoutes.post('/authenticate', (req, res) => {
     try {
+        console.log(JSON.stringify(req.body));
         const username = req.body.username;
         const password = req.body.password;
         authenticate(username, password).then((token) => {

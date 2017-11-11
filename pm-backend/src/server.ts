@@ -29,17 +29,24 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(morgan('dev'));
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*') 
+  next(); 
+});
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type")
+  next();
+});
 app.use(userRoutes);
 app.use('/secret', secretRoutes);
 app.get('/', function (req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*')  
   res.setHeader('Content-Type', 'application/json');
   res.send({hello: 'Hi i am josh'})
 });
 
 app.post('/login', function (req, res) {
   console.log('???');
-  res.setHeader('Access-Control-Allow-Origin', '*')  
   res.setHeader('Content-Type', 'application/json');
   setTimeout(() => res.send({hello: 'Hi i am josh'}), 2000);
 });
