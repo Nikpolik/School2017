@@ -8,7 +8,7 @@ export interface EnsuredLoggedInProps {
 }
 
 
-class EnsureLoggedInContainer extends React.Component<EnsuredLoggedInProps, {}> {
+export default class EnsureLoggedInComponent extends React.Component<EnsuredLoggedInProps, {}> {
     componentDidMount() {
       const { dispatch, user } = this.props
   

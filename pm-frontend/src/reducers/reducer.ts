@@ -4,5 +4,5 @@ import loginReducer from './login.reducer';
 
 // const appReducer = combineReducers
 
-const appReducer = loginReducer;
+const appReducer = combineReducers({login: loginReducer});
 export default appReducer;
