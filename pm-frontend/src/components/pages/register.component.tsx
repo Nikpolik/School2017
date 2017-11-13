@@ -1,18 +1,11 @@
 import * as React from 'react';
+import { Form, Checkbox, Button, Message, Grid } from 'semantic-ui-react';
 
-import { Form, Checkbox, Button, Loader, Message, Grid } from 'semantic-ui-react';
-import { store } from '../../index';
-import { routerActions } from 'react-router-redux';
-
-export interface LoginProps {
+export interface RegisterProps {
   user: any;
-  login: (username: string, password: string) => void;
+  register: (username: string, password: string) => void;
   startedLogin: boolean;
   failedLogin: boolean;
-}
-
-function increase() {
-  store.dispatch(routerActions.push('/'))
 }
 
 const style = {
@@ -22,13 +15,14 @@ const style = {
   transform: 'scale(2) zoom: 0.5 translateX(-50%) translateY(-50%)'
 }
 
-export default class Login extends React.Component<LoginProps,{}> {
+export default class Login extends React.Component<RegisterProps,{}> {
   
   username: HTMLInputElement;
   password: HTMLInputElement;
+  confirmPassword: HTMLInputElement;  
 
-  callLogin(e: Event) {
-    this.props.login(this.username.value, this.password.value);
+  callRegister(e: Event) {
+    this.props.register(this.username.value, this.password.value);
   }
 
   render() {
@@ -45,16 +39,16 @@ export default class Login extends React.Component<LoginProps,{}> {
           <input type={"password"} ref={password => this.password = password}placeholder='Password' />
         </Form.Field>
         <Form.Field>
+          <label>Confirm Password</label>
+          <input type={"password"} ref={confirmPassword => this.confirmPassword = confirmPassword}placeholder='Password' />
+        </Form.Field>
+        <Form.Field>
           <Checkbox label='I agree to the Terms and Conditions' />
         </Form.Field>
-        <Button submit="true" onClick={this.callLogin.bind(this)}>Submit</Button>
-        <Button onClick={() => increase()}>Register</Button>
+        <Button submit="true" onClick={this.callRegister.bind(this)}>Submit</Button>
+        <Button>Login</Button>
       </Form>
     </Grid>);
-    if(this.props.startedLogin) {
-      console.log('here');
-      content = <Loader active/>;
-    }
     return(content);
   }
 }

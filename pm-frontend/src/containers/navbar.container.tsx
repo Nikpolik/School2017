@@ -4,7 +4,7 @@ import { routerActions } from 'react-router-redux';
 import NavBar from '../components/navigation/navbar.component';
 import { State } from '../interfaces';
 
-const mpaStateToProps = (state: State) => {
+const mapStateToProps = (state: State) => {
     return({
         path:  state.router.location.pathname
     });
@@ -12,9 +12,9 @@ const mpaStateToProps = (state: State) => {
 
 const mapActionsToprops = (dispatch: any) => {
     return({
-        push: (path) => dispatch(routerActions.push(path));
+        push: (path: string) => dispatch(routerActions.push(path))
     });
 }
 
-
-
+const NavBarContainer = connect(mapStateToProps, mapActionsToprops)(NavBar);
+export default NavBarContainer;

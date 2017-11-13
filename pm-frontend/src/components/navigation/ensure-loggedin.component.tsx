@@ -7,7 +7,6 @@ export interface EnsuredLoggedInProps {
     children: any
 }
 
-
 export default class EnsureLoggedInComponent extends React.Component<EnsuredLoggedInProps, {}> {
     componentDidMount() {
       const { dispatch, user } = this.props

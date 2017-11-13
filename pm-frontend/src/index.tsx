@@ -19,6 +19,8 @@ import appReducer from './reducers/reducer';
 
 import { State } from './interfaces';
 
+import NavBarContainer from './containers/navbar.container';
+
 const history = createHistory();
 const middleware = routerMiddleware(history);
 
@@ -46,7 +48,7 @@ const App: React.StatelessComponent = () => (
   <Provider store={store}>
     <Router history={history}>
       <div>
-        <NavBar/>
+        <NavBarContainer/>
         <Routes/>
       </div>
     </Router>

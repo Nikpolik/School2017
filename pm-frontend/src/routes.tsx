@@ -11,7 +11,7 @@ const Routes: React.StatelessComponent = () => {
             <Route  exact path='/' component={Home}/>
             <Route path='/login' component={LoginContainer}/>
             <EnsureLoggedInContainer>
-            <Route  exact path='/secret' component={Home}/>
+                <Route  exact path='/secret' component={Home}/>
             </EnsureLoggedInContainer>
         </Switch>
     );

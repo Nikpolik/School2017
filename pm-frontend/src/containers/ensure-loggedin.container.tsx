@@ -5,7 +5,6 @@ import EnsureLoggedInComponent from '../components/navigation/ensure-loggedin.co
 import { State } from '../interfaces';
 
 const mapStateToProps = (state: State) => {
-    console.log(state);
     return({
         user: state.app.login.user
     });
