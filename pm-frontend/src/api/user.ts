@@ -1,13 +1,10 @@
-export async function login(username: string, password: string): Promise<any> {
-    console.log('asking ofr the token');
-    console.log({username, password});
+export default async function apiCall(url: string, body: any, method: string): Promise<any> {
     let headers = new Headers();
     headers.set('Content-Type', 'application/json');
-
-    return fetch('http://localhost:3000/authenticate', {
-        method: 'POST',
+    return fetch(url, {
+        method,
         headers,
-        body: JSON.stringify({username, password})
+        body: JSON.stringify(body)
     }).then((response) => {
         return response.json();
     });

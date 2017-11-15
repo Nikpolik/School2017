@@ -11,17 +11,16 @@ export interface EnsuredLoggedInProps {
 export default class EnsureLoggedInContainer extends React.Component<EnsuredLoggedInProps, {}> {
     componentDidMount() {
       const { dispatch, user } = this.props
-  
-      if (user === '') {
+      if (user !== '') {
         // set the current url/path for future redirection (we use a Redux action)
         // then redirect (we use a React Router method)
-        dispatch(routerActions.push('/login'));
+        dispatch(routerActions.push('/'));
       }
     }
   
     render() {
       const user = this.props.user;
-      if (user !== '') {
+      if (user === '') {
         return this.props.children
       } else {
         return null

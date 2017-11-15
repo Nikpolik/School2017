@@ -6,7 +6,7 @@ import { State } from '../interfaces';
 
 const mapStateToProps = (state: State) => {
     return({
-        user: state.app.login.user
+        user: state.app.user.token
     });
 }
 

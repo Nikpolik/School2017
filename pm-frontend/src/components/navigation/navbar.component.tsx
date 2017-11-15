@@ -3,17 +3,20 @@ import {Menu} from 'semantic-ui-react';
 
 export interface NavBarProps {
     path: string,
-    push: any    
+    push: any,
+    logout: any    
 }
 
 export default class NavBar extends React.Component<NavBarProps, {}> {
+    
     render() {
         return(
         <Menu>
-            <Menu.Item header>Our Company</Menu.Item>
+            <Menu.Item header>Project Easy</Menu.Item>
             <Menu.Menu position={"right"}>
-                <Menu.Item active={this.props.path === '/login'} name='login'/>
-                <Menu.Item name='register'/>
+                <Menu.Item link active={this.props.path === '/login'} onClick={() => this.props.push('/login')} name='login'/>
+                <Menu.Item link active={this.props.path === '/register'} onClick={() => this.props.push('/register')} name='register'/>
+                <Menu.Item link onClick={()=>this.props.logout()}>Logout</Menu.Item>
             </Menu.Menu>   
         </Menu>)
     }

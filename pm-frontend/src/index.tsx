@@ -14,7 +14,6 @@ import thunk from 'redux-thunk';
 import NavBar from './components/navigation/navbar.component';
 import Routes from './routes';
 
-import loginReducer from './reducers/login.reducer'
 import appReducer from './reducers/reducer';
 
 import { State } from './interfaces';
@@ -34,14 +33,10 @@ const store: Store<State> = createStore(
 );
 
 store.subscribe(() => {
+  console.log('saving state');
   const state = store.getState();
-  console.log('---------');
-  console.log(state.app.login)
-  console.log('---------');
-  if(state.app.login && state.app.login.user) {
-    console.log('fired');
-    localStorage.setItem('user', state.app.login.user);
-  }
+  localStorage.setItem('user', state.app.user.token);
+  localStorage.setItem('name', state.app.user.name);    
 });
 
 const App: React.StatelessComponent = () => (
