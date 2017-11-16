@@ -7,7 +7,8 @@ import { logout } from '../actions/user.actions';
 
 const mapStateToProps = (state: State) => {
     return({
-        path:  state.router.location.pathname
+        path:  state.router.location.pathname,
+        name: state.app.user.name
     });
 };
 

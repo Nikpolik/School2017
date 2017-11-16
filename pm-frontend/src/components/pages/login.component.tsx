@@ -19,7 +19,7 @@ function increase() {
 const style = {
   position: 'absolute',
   top: '35%',
-  left: '32%',
+  left: '35%',
   transform: 'scale(2) zoom: 0.5 translateX(-50%) translateY(-50%)'
 }
 

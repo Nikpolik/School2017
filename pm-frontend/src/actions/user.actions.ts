@@ -14,7 +14,8 @@ export interface LoginError extends Action {
 
 export interface LoginSuccess extends Action {
     type: string;
-    user: string
+    user: string;
+    token: string;
 }
 
 export function loginStart() {
@@ -30,10 +31,11 @@ export function loginError(reason: any) {
     });
 }
 
-export function loginSuccess(user: string) {
+export function loginSuccess(user: string, token: string) {
     return({
         type: LOGIN_SUCCESS,
-        user
+        user,
+        token
     });
 }
 
@@ -50,7 +52,7 @@ export function login(username: string, password: string) {
             if(response.success == false) {
                 throw new Error('Wrong password or username');
             }
-            dispatch(loginSuccess(response.token));
+            dispatch(loginSuccess(response.username, response.token));
             dispatch(routerActions.push('/'));            
         }).catch((reason) => {
             dispatch(loginError(reason.message));
