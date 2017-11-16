@@ -11,19 +11,20 @@ userRoutes.post('/authenticate', (req, res) => {
         const password = req.body.password;
         authenticate(username, password).then((token) => {
             res.json({
-                sucess: true,
-                token
+                success: true,
+                token,
+                username
             });
         }).catch((reason) => {
             res.json({
-                sucess: false,
+                success: false,
                 reason: reason.message
             })
         });
     } catch (err) {
         console.log(err.message);
         res.json({
-            sucess: false,
+            success: false,
             reason: err.message
         })
     }
@@ -31,7 +32,7 @@ userRoutes.post('/authenticate', (req, res) => {
 
 userRoutes.post('/register', (req, res) => {
     try {
-        const userForm = req.body.userForm;
+        const userForm = req.body;
         console.log(userForm);
         if(!userForm.password || !userForm.confirmPassword || !userForm.username) {
             throw new Error('Invalid Form');
@@ -41,7 +42,7 @@ userRoutes.post('/register', (req, res) => {
         });
     } catch(err) {
         res.json({
-            sucess: false,
+            success: false,
             reason: err.message
         })
     }

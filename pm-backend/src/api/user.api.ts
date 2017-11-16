@@ -25,26 +25,33 @@ export async function authenticate(name: string, password: string): Promise<Stri
 }
 
 export async function register(userForm: UserForm): Promise<FormValidation> {
+    const userResult = await user.UserModel.findOne({username: userForm.username});
+    if(userResult) {
+        return {
+            success: false,
+            fields: {username: 'Username already exists'}
+        }
+    }
     if(userForm.password.length < 6) {
         return {
-            sucess: false,
-            field: ['password']
+            success: false,
+            fields: {password: 'Password not long enough'}
         }
     }
     if(userForm.password !== userForm.confirmPassword) {
         return {
-            sucess: false,
-            field: ['confirmPassword']
+            success: false,
+            fields: {confirmPassword: 'Passwords did not match'}
         };
     }
     const u = new user.UserModel({username:userForm.username, password: userForm.password});
     return u.save().then((_) => {
         return({
-            sucess: true
+            success: true
         });
     }).catch((reason) => {
         return({
-            sucess: false,
+            success: false,
             reason
         })
     });
