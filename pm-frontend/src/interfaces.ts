@@ -1,4 +1,5 @@
 import { RouterState } from 'react-router-redux';
+import configure from 'redux-idle-monitor';
 
 export interface State {
     app: {
@@ -12,6 +13,7 @@ export interface UserState {
     startedLogin: false;
     failedLogin: false;
     token: string | null;
+    refreshToken: string | null;
     name: string | null;
 };
 
