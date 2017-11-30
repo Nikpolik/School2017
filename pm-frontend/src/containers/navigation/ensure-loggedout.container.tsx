@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 
-import EnsureLoggedOutComponent from '../components/navigation/ensure-loggedout.component';
+import EnsureLoggedOutComponent from '../../components/navigation/ensure-loggedout.component';
 
-import { State } from '../interfaces';
+import { State } from '../../interfaces';
 
 const mapStateToProps = (state: State) => {
     return({

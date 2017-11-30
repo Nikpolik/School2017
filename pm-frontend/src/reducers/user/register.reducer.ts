@@ -1,12 +1,11 @@
-import * as registerActions from '../actions/register.actions';
+import * as registerActions from '../../actions/user/register.actions';
 import { Action } from 'redux';
-import { RegisterState } from '../interfaces';
-import { register } from '../actions/register.actions';
+import { RegisterState } from '../../interfaces';
 
 const initialState: RegisterState = {
     startedRegister: false,
     failedRegister: false,
-    fields: {}
+    errorFields: {}
 };
 
 export default function loginReducer(state = initialState, action: Action) {
@@ -20,7 +19,7 @@ export default function loginReducer(state = initialState, action: Action) {
             return Object.assign({}, state, {
                 startedRegister: false,
                 failedRegister: false,
-                fields: {}
+                errorFields: {}
             });
         case registerActions.REGISTER_ERROR:
             const registerFail = action as registerActions.RegisterErrorAction;    
@@ -33,7 +32,7 @@ export default function loginReducer(state = initialState, action: Action) {
             return Object.assign({}, state, {
                 startedRegister: false,
                 failedRegister: false,
-                fields: validationError.fields
+                errorFields: validationError.errorFields
             });
         default:
             return initialState;

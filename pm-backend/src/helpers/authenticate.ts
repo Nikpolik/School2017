@@ -12,7 +12,7 @@ export function checkAuth (req: Request, res: Response, next: NextFunction) {
             jnwt.verify(token, config.secret, {}, (e) => {
                if(e) {
                    res.status(403).send({
-                    sucess: false,
+                    success: false,
                     reason: e.message
                    });
                } else {
@@ -24,7 +24,7 @@ export function checkAuth (req: Request, res: Response, next: NextFunction) {
         }
     } else {
         res.status(403).send({
-            sucess: false,
+            success: false,
             reason: 'no api token'
         });
     }

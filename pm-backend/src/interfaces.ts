@@ -1,6 +1,6 @@
 export interface FormValidation {
     success: boolean;
-    fields?: {[name: string] : string};
+    errorFields?: {[name: string] : string};
     reason?: string;
 };
 

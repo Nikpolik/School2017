@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { routerActions } from 'react-router-redux';
-import { login } from '../actions/user.actions';
-import Login from '../components/pages/login.component';
-import { State } from '../interfaces';
+import { login } from '../../actions/user/user.actions';
+import Login from '../../components/pages/user/login.component';
+import { State } from '../../interfaces';
 
 const mapStateToProps = (state: State) => {
     return {

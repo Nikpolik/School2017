@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { routerActions } from 'react-router-redux';
 
-import NavBar from '../components/navigation/navbar.component';
-import { State } from '../interfaces';
-import { logout } from '../actions/user.actions';
+import NavBar from '../../components/navigation/navbar.component';
+import { State } from '../../interfaces';
+import { logout } from '../../actions/user/user.actions';
 
 const mapStateToProps = (state: State) => {
     return({

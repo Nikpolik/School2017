@@ -2,10 +2,10 @@ import {Organization, OrganizationModel} from '../models/organization/organizati
 import { UserModel } from '../models/user.model';
 import * as mongoose from 'mongoose';
 
-export async function createOrganization(ownerId: string, name: string) {
-    return UserModel.findById(ownerId).then((owner) => {
+export async function createOrganization(ownerToken: string, name: string) {
+    return UserModel.findOne({token: ownerToken}).then((owner) => {
         if(owner) {
-            const o = new OrganizationModel({owner, name});
+            const o = new OrganizationModel({owner: owner._id, name});
             return o.save();
         } else {
             throw new Error('User not found');

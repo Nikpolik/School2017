@@ -2,11 +2,10 @@ import { Switch, Route } from 'react-router-dom'
 import * as React from 'react';
 
 import Home from './components/pages/home.component';
-import LoginContainer from './containers/login.container';
-import EnsureLoggedInContainer from './containers/ensure-loggedin.container';
-import EnsureLoggedOutContainer from './containers/ensure-loggedout.container';
-
-import Register from './containers/register.container';
+import LoginContainer from './containers/user/login.container';
+import Register from './containers/user/register.container';
+import EnsureLoggedInContainer from './containers/navigation/ensure-loggedin.container';
+import EnsureLoggedOutContainer from './containers/navigation/ensure-loggedout.container';
 
 const Routes: React.StatelessComponent = () => {
     return(

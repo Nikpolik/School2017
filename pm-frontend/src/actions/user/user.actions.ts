@@ -1,5 +1,5 @@
 import {Dispatch, Action} from 'redux';
-import apiCall from '../api/user';
+import apiCall from '../../api/user';
 import { routerActions } from 'react-router-redux';
 
 export const LOGIN_START = 'LOGIN_START';

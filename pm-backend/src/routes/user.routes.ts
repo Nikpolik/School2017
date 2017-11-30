@@ -6,7 +6,6 @@ const userRoutes: Router = Router();
 
 userRoutes.post('/authenticate', (req, res) => {
     try {
-        console.log(JSON.stringify(req.body));
         const username = req.body.username;
         const password = req.body.password;
         authenticate(username, password).then((token) => {
@@ -34,15 +33,14 @@ userRoutes.post('/register', (req, res) => {
     try {
         const userForm = req.body;
         console.log(userForm);
-        if(!userForm.password || !userForm.confirmPassword || !userForm.username) {
-            throw new Error('Invalid Form');
-        }
         register({username: userForm.username, password: userForm.password, confirmPassword: userForm.confirmPassword}).then((formValidation) => {
             res.json(formValidation);
         });
     } catch(err) {
+        console.log(err.message);
         res.json({
             success: false,
+            errorFields: {},            
             reason: err.message
         })
     }

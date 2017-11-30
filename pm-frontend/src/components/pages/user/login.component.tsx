@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import { Form, Checkbox, Button, Loader, Message, Grid, Header } from 'semantic-ui-react';
-import { store } from '../../index';
 import { routerActions } from 'react-router-redux';
 
 export interface LoginProps {
@@ -10,10 +9,6 @@ export interface LoginProps {
   startedLogin: boolean;
   failedLogin: boolean;
   goToRegister: any;
-}
-
-function increase() {
-  store.dispatch(routerActions.push('/'))
 }
 
 const style = {
@@ -32,6 +27,20 @@ export default class Login extends React.Component<LoginProps,{}> {
     this.props.login(this.username.value, this.password.value);
   }
 
+  Error(props: {failedLogin: boolean}) {
+    if(props.failedLogin) {
+      return(
+        <Message
+          visible
+          error
+          header='Error'
+          content="Username or Password is wrong"
+        />
+      );
+    }
+    return null;
+  }
+  
   render() {
     console.log(this.props.startedLogin);
     let content = (
@@ -47,11 +56,9 @@ export default class Login extends React.Component<LoginProps,{}> {
           <label>Password</label>
           <input type={"password"} ref={password => this.password = password}placeholder='Password' />
         </Form.Field>
-        <Form.Field>
-          <Checkbox label='I agree to the Terms and Conditions' />
-        </Form.Field>
-        <Button submit="true" onClick={this.callLogin.bind(this)}>Submit</Button>
+        <this.Error failedLogin={this.props.failedLogin}/>
         <Button onClick={this.props.goToRegister}>Register</Button>
+        <Button submit="true" onClick={this.callLogin.bind(this)}>Submit</Button>
       </Form>
     </Grid>);
     if(this.props.startedLogin) {

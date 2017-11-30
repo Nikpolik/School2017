@@ -17,6 +17,6 @@ export interface UserState {
 
 export interface RegisterState {
     startedRegister: false;
-    fields: {[name: string] : string};
+    errorFields: {[name: string] : string};
     failedRegister: false;
 }

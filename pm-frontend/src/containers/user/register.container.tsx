@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 import { routerActions } from 'react-router-redux';
 
-import { register } from '../actions/register.actions';
-import Register from '../components/pages/register.component';
-import { State } from '../interfaces';
+import { register } from '../../actions/user/register.actions';
+import Register from '../../components/pages/user/register.component';
+import { State } from '../../interfaces';
 
 const mapStateToProps = (state: State) => {
     return {
         startedRegister: state.app.register.startedRegister,
-        fields: state.app.register.fields
+        errorFields: state.app.register.errorFields
     }
 }
 

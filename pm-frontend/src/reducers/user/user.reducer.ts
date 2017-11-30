@@ -1,6 +1,6 @@
-import * as userActions from '../actions/user.actions';
+import * as userActions from '../../actions/user/user.actions';
 import { Action } from 'redux';
-import { UserState } from '../interfaces';
+import { UserState } from '../../interfaces';
 
 const token = localStorage.getItem('user');
 const name = localStorage.getItem('name');
@@ -9,14 +9,14 @@ const emptyState: UserState = {
     startedLogin: false,
     failedLogin: false,
     token: '',
-    name:''
+    name:'',
 }
 
 const initialState: UserState = {
     startedLogin: false,
     failedLogin: false,
     token,
-    name
+    name,
 };
 
 export default function loginReducer(state = initialState, action: Action) {

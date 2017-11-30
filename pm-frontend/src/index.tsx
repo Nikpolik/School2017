@@ -18,7 +18,7 @@ import appReducer from './reducers/reducer';
 
 import { State } from './interfaces';
 
-import NavBarContainer from './containers/navbar.container';
+import NavBarContainer from './containers/navigation/navbar.container';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);

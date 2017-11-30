@@ -6,7 +6,7 @@ import * as morgan from 'morgan';
 
 import config from './config';
 
-import {userRoutes, secretRoutes} from './routes/index';
+import {userRoutes, organizationRoutes} from './routes/index';
 
 const app: express.Application = express();
 
@@ -39,7 +39,9 @@ app.use((req, res, next) => {
   next();
 });
 app.use(userRoutes);
-app.use('/secret', secretRoutes);
+
+app.use('/organization', organizationRoutes);
+
 app.get('/', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.send({hello: 'Hi i am josh'})
