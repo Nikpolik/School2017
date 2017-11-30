@@ -9,13 +9,14 @@ export function checkAuth (req: Request, res: Response, next: NextFunction) {
     const token = req.headers['x-access-token'] || req.body.token || req.query.token;
     if(token) {
         try {
-            jnwt.verify(token, config.secret, {}, (e) => {
+            jnwt.verify(token, config.secret, {}, (e, decoded: any) => {
                if(e) {
                    res.status(403).send({
                     success: false,
                     reason: e.message
                    });
                } else {
+                   req.body.id = decoded.id;
                    next();
                } 
             });

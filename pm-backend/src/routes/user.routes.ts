@@ -1,20 +1,20 @@
 import { Router } from 'express';
 import {authenticate, register} from '../api/user.api';
 
-import { UserForm } from '../interfaces';
+import { RegisterReq, AuthReq, AuthResp } from '../../../interfaces/index';
 const userRoutes: Router = Router();
 
 userRoutes.post('/authenticate', (req, res) => {
     try {
-        const username = req.body.username;
-        const password = req.body.password;
-        authenticate(username, password).then((token) => {
-            res.json({
-                success: true,
-                token,
-                username
-            });
-        }).catch((reason) => {
+        const params: AuthReq = req.body;
+        console.log(params);
+        authenticate(params).then((result: AuthResp | undefined) => {
+            if(result) {
+                res.json({
+                    result
+                });
+            }
+        }).catch((reason: any) => {
             res.json({
                 success: false,
                 reason: reason.message

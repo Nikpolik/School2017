@@ -28,13 +28,14 @@ class User extends Typegoose {
 
   @prop()
   age: number;
-
-  @prop()
-  token: string
   
   @instanceMethod
-  async validatePassword(this: InstanceType<User>, password: String): Promise<Boolean> {
-      return bcrypt.compare(password, this.password)
+  async validatePassword(this: InstanceType<User>, password: String): Promise<User | undefined> {
+        return bcrypt.compare(password, this.password).then((value) => {
+            if(value) {
+                return this;
+            }
+        }) 
   }
 }
 

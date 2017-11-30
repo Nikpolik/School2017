@@ -1,33 +1,30 @@
 import * as jswt from 'jsonwebtoken';
 import { user } from '../models/index';
 import config from '../config';
-import { FormValidation, UserForm } from '../interfaces';
+import { AuthReq, AuthResp, RegisterReq, RegisterResp} from '../../../interfaces/index';
 
-export async function authenticate(name: string, password: string): Promise<String | undefined> {
-    return user.UserModel.findOne({username: name}).then((user) => {
-        if(user) {
-            return ({isValid: user.validatePassword(password), user});
-        } else {
-            throw new Error('Could not find user');
+export async function authenticate(params: AuthReq): Promise<AuthResp> {
+     return validateAuthParams(params).then((result) => {
+        if(!result.isValid) {
+            throw new Error('Invalid Password');
         }
-    }).then((result) => {
-        if(result.isValid) {
-            const payload = {
-                name          
-            };
-            const token = jswt.sign(payload, config.secret, {
-                expiresIn: 1440
+        const payload = {
+            id: result.user._id
+        }
+        const token = jswt.sign(payload, config.secret, {
+            expiresIn: '25m'
+        });
+        let refreshToken = '';
+        if(result.getRefresh) {
+            refreshToken = jswt.sign(payload, config.secret, {
+                expiresIn: '1d'
             });
-            result.user.token = token;
-            result.user.save();
-            return token;
-        } else {
-            throw new Error('Wrong password');
         }
+        return {success: true, refreshToken, token, name: result.user.username}
     });
 }
 
-export async function register(userForm: UserForm): Promise<FormValidation> {
+export async function register(userForm: RegisterReq): Promise<RegisterResp> {
     if(!userForm.username) {
         return {
             success: false,
@@ -75,4 +72,37 @@ export async function register(userForm: UserForm): Promise<FormValidation> {
         })
     });
     
+}
+
+async function validateAuthParams(params: AuthReq): Promise<{isValid: boolean; user: any; getRefresh: boolean}>{
+    if(params.type === 'refresh' && params.refreshToken) {
+        const decoded: any = jswt.verify(params.refreshToken, config.secret);
+        console.log(decoded);
+        if(typeof decoded === 'string') {
+            throw new Error(decoded);
+        }
+        return user.UserModel.findById(decoded.id).then((user) => {
+            if(!user) {
+                throw new Error('Could not find user');
+            }
+            return({isValid: true, user, getRefresh: false});
+        });
+    } else if (params.type === 'password' && params.name) {
+        return user.UserModel.findOne({username: params.name}).then((user) => {
+            if(!params.password) {
+                throw new Error('Invalid Password');
+            }
+            if(!user) {
+                throw new Error('Could not find user');
+            }
+            return user.validatePassword(params.password);
+        }).then((user) => {
+            if(user) {
+                return {isValid: true, user, getRefresh: true}
+            }
+            throw new Error('Invalid Password');
+        })
+    }
+    console.log('out');
+    throw new Error('Could not find auth method');
 }
