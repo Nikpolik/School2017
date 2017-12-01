@@ -5,6 +5,8 @@ import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware, push } from 'react-router-redux';
 import { State } from './interfaces';
 import createHistory from 'history/createBrowserHistory'
+import * as notificationsActions from './actions/helpers/notifications.actions';
+
 
 import * as idleMonitor from './components/idle-monitor';
 import appReducer from './reducers/reducer';
@@ -27,10 +29,12 @@ const store: Store<State> = createStore(
     const state: State = store.getState();
     let currentUser = state.app.user.name;
     if(currentUser !== oldUser &&  currentUser !== '') {
-        oldUser = currentUser;        
+        oldUser = currentUser;     
+        store.dispatch(notificationsActions.addNotification('Started checking inactivity'));   
         store.dispatch(idleMonitor.actions.start());
     } else if (currentUser !== oldUser) {
         oldUser = currentUser;        
+        store.dispatch(notificationsActions.addNotification('Stoped checking inactivity'));           
         store.dispatch(idleMonitor.actions.stop);
     }
     localStorage.setItem('refreshToken', state.app.user.refreshToken);

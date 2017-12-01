@@ -10,6 +10,8 @@ import NavBar from './components/navigation/navbar.component';
 import Routes from './routes';
 
 import NavBarContainer from './containers/navigation/navbar.container';
+import Notifications from './containers/helpers/notifications.container';
+
 
 const App: React.StatelessComponent = () => (
   <Provider store={store}>
@@ -17,6 +19,7 @@ const App: React.StatelessComponent = () => (
       <div>
         <NavBarContainer/>
         <Routes/>
+        <Notifications/>
       </div>
     </Router>
   </Provider>

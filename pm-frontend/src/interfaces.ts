@@ -4,7 +4,8 @@ import configure from 'redux-idle-monitor';
 export interface State {
     app: {
         user: UserState,
-        register: RegisterState
+        register: RegisterState,
+        notifications: NotificationsState
     }
     router: RouterState
 }
