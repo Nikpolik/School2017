@@ -6,7 +6,7 @@ import { State } from '../../interfaces';
 
 const mapStateToProps = (state: State) => {
     return({
-        notifications: state.app.notifications.notifications.slice(0, 3)
+        notifications: state.app.notifications.notifications.slice(0, 4)
     });
 }
 

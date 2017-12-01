@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Message } from 'semantic-ui-react';
+import { Message, List } from 'semantic-ui-react';
 
 interface NotificationsProps {
     notifications: string[]
@@ -8,17 +8,21 @@ interface NotificationsProps {
 
 const style = {
     position: "absolute",
-    top: '0px',
-    right: '50rem',
+    top: '3.5rem',
+    right: '1.5rem',
 } as React.CSSProperties
 
 export default class Notifications extends React.Component<NotificationsProps, {}> {
     render() {
         return(
-            <div style={style}>
+            <List style={style}>
                 {this.props.notifications.map((message, index) => {
-                    return <Message onDismiss={() => this.props.deleteNotification(index)} compact floating key={index}>{message}</Message>
+                    return (
+                    
+                    <List.Item key={index}>
+                        <Message style={{cursor: 'pointer'}} onClick={() => this.props.deleteNotification(index)} compact floating>{message}</Message>
+                    </List.Item>)
                 })}
-            </div>
+            </List>
         )}
 }
