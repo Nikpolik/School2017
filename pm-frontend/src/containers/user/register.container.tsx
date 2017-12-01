@@ -8,7 +8,8 @@ import { State } from '../../interfaces';
 const mapStateToProps = (state: State) => {
     return {
         startedRegister: state.app.register.startedRegister,
-        errorFields: state.app.register.errorFields
+        errorFields: state.app.register.errorFields,
+        reason: state.app.register.reason
     }
 }
 

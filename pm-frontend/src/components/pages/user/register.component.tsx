@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Checkbox, Button, Message, Grid, Header } from 'semantic-ui-react';
+import { Form, Checkbox, Message, Grid, Header } from 'semantic-ui-react';
 
 export interface RegisterProps {
   register: (username: string, password: string, confirmPassword: string) => void;
@@ -7,6 +7,7 @@ export interface RegisterProps {
   errorFields: {[name: string] : string};
   failedRegister: false;
   goToLogin: any; 
+  reason: string;
 }
 
 const style = {
@@ -45,7 +46,7 @@ export default class Register extends React.Component<RegisterProps,{}> {
     <Grid style={style}>
       <Form onSubmit={(e) => e.preventDefault()}>
         <Header>Welcome to Project Easy</Header>
-        <p>Register bellow or press the login button if you have an account</p>
+        <p>Register bellow or go to <a href="#" onClick={(event) => {event.preventDefault(); this.props.goToLogin()}}>login</a> if you have an account</p>
         <Form.Field>
           <label>Username</label>
           <input ref={(username => this.username = username)} placeholder='Username' />
@@ -64,8 +65,7 @@ export default class Register extends React.Component<RegisterProps,{}> {
         <Form.Field>
           <Checkbox label='I agree to the Terms and Conditions' />
         </Form.Field>
-        <Button onClick={this.props.goToLogin}>Login</Button>
-        <Button submit="true" onClick={this.callRegister.bind(this)}>Submit</Button>
+        <Form.Button submit="true" onClick={this.callRegister.bind(this)}>Submit</Form.Button>
       </Form>
     </Grid>);
     return(content);

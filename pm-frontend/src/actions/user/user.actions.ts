@@ -1,5 +1,5 @@
 import {Dispatch, Action} from 'redux';
-import apiCall from '../../api/user';
+import apiCall from '../../api/index';
 import { routerActions } from 'react-router-redux';
 
 import { AuthReq, AuthResp } from '../../../../interfaces/index';

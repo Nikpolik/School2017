@@ -1,19 +1,15 @@
 import {Dispatch, Action} from 'redux';
-import apiCall from '../../api/user';
+import apiCall from '../../api/index';
 
 export const REGISTER_START = 'REGISTER_START';
 export const REGISTER_ERROR = 'REGISTER_ERROR';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const FORM_ERROR = 'FORM_ERROR';
+
 
 export interface RegisterErrorAction extends Action {
-    type: string,
-    reason: string
-};
-
-export interface FormValidErrorAction extends Action {
     type: string;
-    errorFields: {[name: string] : string}
+    errorFields?: {[name: string] : string}
+    reason?: string
 }
 
 export function registerStart() {
@@ -28,19 +24,17 @@ export function registerSuccess() {
     });
 }
 
-export function registerError(reason: string) {
-    return({
-        type: REGISTER_ERROR,
-        reason
-    });
-};
-
-export function formValidError(errorFields: {[name: string] : string}) {
-    console.log(errorFields);    
-    return({
-        type: FORM_ERROR,
-        errorFields
-    });
+export function registerError(reason?: string, errorFields?: {[name: string] : string}) {
+    const action: RegisterErrorAction = {
+        type: REGISTER_ERROR
+    }
+    if(reason) {
+        action.reason = reason;
+    }
+    if(errorFields) {
+        action.errorFields = errorFields;
+    }
+    return(action);
 };
 
 export function register(username: string, password: string, confirmPassword: string) {
@@ -48,7 +42,7 @@ export function register(username: string, password: string, confirmPassword: st
         dispatch(registerStart());
         apiCall('http://localhost:3000/register', {username, password, confirmPassword}, 'POST').then((response) => {
             if(response.success == false) {
-               dispatch(formValidError(response.errorFields));
+               dispatch(registerError(response.errorFields));
                return
             }
             dispatch(registerSuccess());            

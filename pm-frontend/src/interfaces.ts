@@ -21,4 +21,9 @@ export interface RegisterState {
     startedRegister: false;
     errorFields: {[name: string] : string};
     failedRegister: false;
+    reason: string
+}
+
+export interface NotificationsState {
+    notifications: string[],
 }

@@ -5,7 +5,8 @@ import { RegisterState } from '../../interfaces';
 const initialState: RegisterState = {
     startedRegister: false,
     failedRegister: false,
-    errorFields: {}
+    errorFields: {},
+    reason: ''
 };
 
 export default function loginReducer(state = initialState, action: Action) {
@@ -22,17 +23,18 @@ export default function loginReducer(state = initialState, action: Action) {
                 errorFields: {}
             });
         case registerActions.REGISTER_ERROR:
-            const registerFail = action as registerActions.RegisterErrorAction;    
+            const validationError = action as registerActions.RegisterErrorAction
+            const newState: any = {}
+            if(validationError.errorFields) {
+                newState.errorFields = validationError;
+            }
+            if(validationError.reason) {
+                newState.reason = validationError;
+            }
             return Object.assign({}, state, {
                 startedRegister: false,
-                failedRegister: registerFail.reason
-            });
-        case registerActions.FORM_ERROR:
-            const validationError = action as registerActions.FormValidErrorAction
-            return Object.assign({}, state, {
-                startedRegister: false,
-                failedRegister: false,
-                errorFields: validationError.errorFields
+                failedRegister: true,
+                ...newState
             });
         default:
             return initialState;
