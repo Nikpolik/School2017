@@ -25,3 +25,9 @@ export function removeNotification(index: number) {
         index
     })
 }
+
+export function notify(message: string) {
+    return((dispatch) => {
+        
+    })
+}

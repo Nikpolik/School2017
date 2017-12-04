@@ -1,7 +1,7 @@
 import {Dispatch, Action} from 'redux';
 import apiCall from '../../api/index';
 import { routerActions } from 'react-router-redux';
-
+import { addNotification } from '../helpers/notifications.actions';
 import { AuthReq, AuthResp } from '../../../../interfaces/index';
 
 export const LOGIN_START = 'LOGIN_START';
@@ -101,7 +101,7 @@ export function login(username: string, password: string) {
             if(response.success == false) {
                 throw new Error('Wrong password or username');
             }
-            console.log(response);
+            dispatch(addNotification("Account Registered Successfully"));                        
             dispatch(loginSuccess(response.name, response.token, response.refreshToken));
             dispatch(routerActions.push('/'));            
         }).catch((reason) => {

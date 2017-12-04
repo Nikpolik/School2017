@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Message, List } from 'semantic-ui-react';
+import { Message, List, TransitionGroup } from 'semantic-ui-react';
 
 interface NotificationsProps {
     notifications: string[]
@@ -15,14 +15,13 @@ const style = {
 export default class Notifications extends React.Component<NotificationsProps, {}> {
     render() {
         return(
-            <List style={style}>
-                {this.props.notifications.map((message, index) => {
-                    return (
-                    
-                    <List.Item key={index}>
-                        <Message style={{cursor: 'pointer'}} onClick={() => this.props.deleteNotification(index)} compact floating>{message}</Message>
-                    </List.Item>)
-                })}
-            </List>
+                <TransitionGroup as={List}   style={style}>
+                    {this.props.notifications.map((message, index) => {
+                        return (
+                        <List.Item key={index}>
+                            <Message style={{cursor: 'pointer'}} onClick={() => this.props.deleteNotification(index)} compact floating>{message}</Message>
+                        </List.Item>)
+                    })}
+                </TransitionGroup>
         )}
 }
