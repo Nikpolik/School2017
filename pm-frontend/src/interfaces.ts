@@ -26,5 +26,6 @@ export interface RegisterState {
 }
 
 export interface NotificationsState {
-    notifications: string[],
+    currentId: number;
+    notifications: {[id: string] : {message: string, type: string}};
 }

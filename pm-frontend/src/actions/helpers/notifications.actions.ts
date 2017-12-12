@@ -1,33 +1,41 @@
+import { State } from '../../interfaces';
+import { setTimeout } from 'timers';
+
 export const ADD_NOTIFICATION  = 'ADD_NOTIFICATION';
 export const REMOVE_NOTIFICATION  = 'REMOVE_NOTIFICATION';
 
 
 export interface AddNotifAction {
     type: string,
-    message: string
+    message: string,
+    notificationType: string
 }
 
 export interface RemoveNotifAction {
     type: string,
-    index: number
+    id: string
 }
 
-export function addNotification(message: string) {
-    return({
+export function addNotification(message: string, notificationType: string): AddNotifAction {
+        return({
         type: ADD_NOTIFICATION,
-        message
+        message,
+        notificationType
     })
 }
 
-export function removeNotification(index: number) {
+export function removeNotification(id: string): RemoveNotifAction {
     return({
         type: REMOVE_NOTIFICATION,
-        index
+        id
     })
 }
 
-export function notify(message: string) {
+export function notify(message: string, type: string) {
     return((dispatch) => {
-        
+        dispatch(addNotification(message, type));
+        setTimeout(() => {
+            //dispatch(removeNotification(currentId));
+        }, 1000)
     })
 }

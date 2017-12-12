@@ -30,11 +30,11 @@ const store: Store<State> = createStore(
     let currentUser = state.app.user.name;
     if(currentUser !== oldUser &&  currentUser !== '') {
         oldUser = currentUser;     
-        store.dispatch(notificationsActions.addNotification('Started checking inactivity'));   
+        store.dispatch(notificationsActions.notify('Started checking inactivity', "success"));   
         store.dispatch(idleMonitor.actions.start());
     } else if (currentUser !== oldUser) {
         oldUser = currentUser;        
-        store.dispatch(notificationsActions.addNotification('Stoped checking inactivity'));           
+        store.dispatch(notificationsActions.notify('Stoped checking inactivity', "success"));           
         store.dispatch(idleMonitor.actions.stop);
     }
     localStorage.setItem('refreshToken', state.app.user.refreshToken);

@@ -1,6 +1,6 @@
 import {Dispatch, Action} from 'redux';
 import apiCall from '../../api/index';
-import { addNotification } from '../helpers/notifications.actions';
+import { notify } from '../helpers/notifications.actions';
 
 export const REGISTER_START = 'REGISTER_START';
 export const REGISTER_ERROR = 'REGISTER_ERROR';
@@ -47,7 +47,7 @@ export function register(username: string, password: string, confirmPassword: st
                return
             }
             dispatch(registerSuccess());
-            dispatch(addNotification("Account Registered Successfully"));            
+            notify("Account Registered Successfully", "success");            
         }).catch((reason) => {
             dispatch(registerError(reason.message));
         });

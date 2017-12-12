@@ -5,14 +5,21 @@ import { State } from '../../interfaces';
 
 
 const mapStateToProps = (state: State) => {
+    let count = 0;
+    const allNotifications = state.app.notifications.notifications;
+    const notifications = {}
+    const keys = Object.keys(allNotifications).sort().slice(0, 4);
+    for(let key in keys) {
+        notifications[key] = allNotifications[key];
+    }  
     return({
-        notifications: state.app.notifications.notifications.slice(0, 4)
+        notifications
     });
 }
 
 const mapDispatchToPropss = (dispatch: any) => {
     return({
-            deleteNotification: (index: number) => dispatch(actions.removeNotification(index))
+            deleteNotification: (id: string) => dispatch(actions.removeNotification(id))
     });
 }
 
