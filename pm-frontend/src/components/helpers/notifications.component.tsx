@@ -14,21 +14,19 @@ const style = {
 
 export default class Notifications extends React.Component<NotificationsProps, {}> {
     notificationList(notifications: {[id: string] : {message: string, type: string}}) {
-        console.log('------*------');
-        let list = []
-        for(let key in notifications) {
-            console.log(notifications[key]);
-            list.push(notifications[key]);
-        }
-        return list;
+        return Object.keys(notifications).map((key) => {
+            const style = {}
+            // the prop must just exist for the style to take effect
+            style[notifications[key].type] = true;
+            return <List.Item key={key} onClick={() => {this.props.deleteNotification(key)}}  ><Message {...style}>{notifications[key].message}</Message></List.Item>
+        })
     }
 
     render() {
+        const notifications = this.notificationList(this.props.notifications);
         return(
             <TransitionGroup as={List}   style={style}>
-                {this.notificationList(this.props.notifications).map((notification, index) => {
-                    return <div>{index}</div>
-                })}
+                {notifications}
             </TransitionGroup>
         )}
 }

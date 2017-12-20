@@ -9,25 +9,31 @@ const initialState: NotificationsState = {
 
 export default function NotificationsReducer(state = initialState, action: Action) {
     let id;
+    let newState;
+    let notifications;
     switch(action.type) {
         case actions.ADD_NOTIFICATION:
             const addAction = action as actions.AddNotifAction;
-            const notifications = state.notifications;
+            notifications = state.notifications;
             id = state.currentId.toString();
             const notification = {message: addAction.message, type: addAction.notificationType};
-            const newState = {...state, currentId: ++id};
+            newState = {...state, currentId: ++id};
             // id - 1 is just to start counting from 0
             newState.notifications[id - 1] = notification;
             return newState;         
         case actions.REMOVE_NOTIFICATION:
             let removeAction = action as actions.RemoveNotifAction;
             id = removeAction.id;
-            return Object.keys(state).reduce((obj, key) => {
+            notifications = Object.keys(state.notifications).reduce((obj, key) => {
                 if (key !== id) {
+                  console.log(key + ' || ' +  id);
                   return { ...obj, [key]: state[key] }
                 }
                 return obj
-            }, {}) 
+            }, {});
+            newState = {...state, notifications};
+            console.log(newState);
+            return {...state, notifications};
         default:
             return state;
     }

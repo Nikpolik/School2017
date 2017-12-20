@@ -10,9 +10,7 @@ userRoutes.post('/authenticate', (req, res) => {
         console.log(params);
         authenticate(params).then((result: AuthResp | undefined) => {
             if(result) {
-                res.json({
-                    result
-                });
+                res.json(result);
             }
         }).catch((reason: any) => {
             res.json({
