@@ -1,3 +1,5 @@
+import { setTimeout } from "timers";
+
 export const ADD_NOTIFICATION  = 'ADD_NOTIFICATION';
 export const REMOVE_NOTIFICATION  = 'REMOVE_NOTIFICATION';
 
@@ -29,7 +31,12 @@ export function removeNotification(id: string) {
 }
 
 export function notify(message: string, type: string) {
-    return((dispatch) => {
+    return((dispatch, getState) => {
+        const currentId = getState().app.notifications.currentId.toString();
+        console.log(currentId);
         dispatch(addNotification(message, type));
+        setTimeout(() => {
+            dispatch(removeNotification(currentId))
+        }, 10000)
     })
 }

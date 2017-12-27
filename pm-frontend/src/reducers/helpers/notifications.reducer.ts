@@ -26,13 +26,10 @@ export default function NotificationsReducer(state = initialState, action: Actio
             id = removeAction.id;
             notifications = Object.keys(state.notifications).reduce((obj, key) => {
                 if (key !== id) {
-                  console.log(key + ' || ' +  id);
-                  return { ...obj, [key]: state[key] }
+                  return { ...obj, [key]: state.notifications[key] }
                 }
                 return obj
             }, {});
-            newState = {...state, notifications};
-            console.log(newState);
             return {...state, notifications};
         default:
             return state;
