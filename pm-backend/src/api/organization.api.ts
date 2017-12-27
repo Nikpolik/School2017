@@ -1,9 +1,8 @@
 import {Organization, OrganizationModel} from '../models/organization/organization.model';
 import { UserModel } from '../models/user.model';
-import * as mongoose from 'mongoose';
 
-export async function createOrganization(ownerToken: string, name: string) {
-    return UserModel.findOne({token: ownerToken}).then((owner) => {
+export async function createOrganization(id: string, name: string) {
+    return UserModel.findById(id).then((owner) => {
         if(owner) {
             const o = new OrganizationModel({owner: owner._id, name});
             return o.save();

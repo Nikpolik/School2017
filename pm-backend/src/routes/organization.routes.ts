@@ -10,8 +10,7 @@ organizationRoutes.use(checkAuth);
 
 organizationRoutes.post('/create', (req, res) => {
     try {
-        const token = req.headers['x-access-token'] || req.body.token || req.query.token;
-        createOrganization(token, req.body.name).then((result) => {
+        createOrganization(req.body.id, req.body.name).then((result) => {
             if(result.success) {
                 res.json(result);
             }
