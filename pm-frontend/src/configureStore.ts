@@ -14,7 +14,6 @@ import appReducer from './reducers/reducer';
 const history = createHistory();
 const middleware = routerMiddleware(history);
 
-
 const store: Store<State> = createStore(
     combineReducers({
       app: appReducer,    
@@ -30,13 +29,12 @@ const store: Store<State> = createStore(
     let currentUser = state.app.user.name;
     if(currentUser !== oldUser &&  currentUser !== '') {
         oldUser = currentUser;     
-        store.dispatch(notificationsActions.notify('Started checking inactivity', "positive"));   
         store.dispatch(idleMonitor.actions.start());
     } else if (currentUser !== oldUser) {
         oldUser = currentUser;        
-        store.dispatch(notificationsActions.notify('Stoped checking inactivity', "error"));           
-        store.dispatch(idleMonitor.actions.stop);
+        store.dispatch(idleMonitor.actions.stop());
     }
+    localStorage.setItem('token', state.app.user.token);
     localStorage.setItem('refreshToken', state.app.user.refreshToken);
     localStorage.setItem('name', state.app.user.name);    
   });

@@ -42,7 +42,6 @@ export default class Login extends React.Component<LoginProps,{}> {
   }
   
   render() {
-    console.log(this.props.startedLogin);
     let content = (
     <Grid style={style}>
       <Form onSubmit={(e) => e.preventDefault()}>
@@ -63,7 +62,6 @@ export default class Login extends React.Component<LoginProps,{}> {
       </Form>
     </Grid>);
     if(this.props.startedLogin) {
-      console.log('here');
       content = <Loader active/>;
     }
     return(content);

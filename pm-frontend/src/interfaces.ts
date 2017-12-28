@@ -5,7 +5,8 @@ export interface State {
     app: {
         user: UserState,
         register: RegisterState,
-        notifications: NotificationsState
+        notifications: NotificationsState,
+        orgnizations: OrginizationsState
     }
     router: RouterState
 }
@@ -23,6 +24,11 @@ export interface RegisterState {
     errorFields: {[name: string] : string};
     failedRegister: false;
     reason: string
+}
+
+export interface OrginizationsState {
+    fetching: boolean;
+    organizations: any[]
 }
 
 export interface NotificationsState {

@@ -33,7 +33,6 @@ export function removeNotification(id: string) {
 export function notify(message: string, type: string) {
     return((dispatch, getState) => {
         const currentId = getState().app.notifications.currentId.toString();
-        console.log(currentId);
         dispatch(addNotification(message, type));
         setTimeout(() => {
             dispatch(removeNotification(currentId))

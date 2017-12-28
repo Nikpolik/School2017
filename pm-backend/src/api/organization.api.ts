@@ -1,5 +1,6 @@
 import {Organization, OrganizationModel} from '../models/organization/organization.model';
 import { UserModel } from '../models/user.model';
+import { organization } from '../models/index';
 
 export async function createOrganization(id: string, name: string) {
     return UserModel.findById(id).then((owner) => {
@@ -19,4 +20,13 @@ export async function createOrganization(id: string, name: string) {
             reason: err.message
         }
     });
+}
+
+export async function getOrganizations(id: string): Promise<{success: boolean, organizations: any}> {
+    return OrganizationModel.find({owner: id}).then((result) => {
+        return {
+            success: true,
+            organizations: result
+        }
+    })
 }

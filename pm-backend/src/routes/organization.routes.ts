@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { checkAuth } from '../helpers/authenticate';
-import { createOrganization } from '../api/organization.api';
+import { createOrganization, getOrganizations } from '../api/organization.api';
 import { organization } from '../models/index';
 
 const organizationRoutes: Router = Router();
@@ -22,5 +22,11 @@ organizationRoutes.post('/create', (req, res) => {
         });
     }
 });
+
+organizationRoutes.get('/all', (req, res) => {
+    getOrganizations(req.body.id).then((result) => {
+        res.json(result);
+    })
+})
 
 export { organizationRoutes };

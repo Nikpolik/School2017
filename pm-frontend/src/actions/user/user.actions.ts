@@ -75,7 +75,7 @@ export function refresh(refreshToken: string) {
             refreshToken,
             type: 'refresh'
         }
-        apiCall('http://localhost:3000/authenticate', refreshRequest, 'POST').then((response: AuthResp) => {
+        apiCall('http://localhost:3000/authenticate', refreshRequest, 'POST', false).then((response: AuthResp) => {
             if(response.success == false) {
                 throw new Error(response.reason);
             }
@@ -97,7 +97,7 @@ export function login(username: string, password: string) {
             password: password,
             type: 'password'
         }
-        apiCall('http://localhost:3000/authenticate', authRequest, 'POST').then((response: AuthResp) => {
+        apiCall('http://localhost:3000/authenticate', authRequest, 'POST', false).then((response: AuthResp) => {
             if(response.success == false) {
                 throw new Error('Wrong password or username');
             }

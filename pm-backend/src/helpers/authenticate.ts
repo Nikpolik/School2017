@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as jnwt from 'jsonwebtoken';
 
 import config from '../config';
+
 export function checkAuth (req: Request, res: Response, next: NextFunction) {
     console.log('checkAuth ' + req.url);
     // don't serve /secure to those not logged in
