@@ -5,7 +5,7 @@ import { organization } from '../models/index';
 export async function createOrganization(id: string, name: string) {
     return UserModel.findById(id).then((owner) => {
         if(owner) {
-            const o = new OrganizationModel({owner: owner._id, name});
+            const o = new OrganizationModel({owner: owner, name});
             return o.save();
         } else {
             throw new Error('User not found');
@@ -22,7 +22,7 @@ export async function createOrganization(id: string, name: string) {
     });
 }
 
-export async function getOrganizations(id: string): Promise<{success: boolean, organizations: any}> {
+export async function getOrganizations(id: string, role: string): Promise<{success: boolean, organizations: any}> {
     return OrganizationModel.find({owner: id}).then((result) => {
         return {
             success: true,
