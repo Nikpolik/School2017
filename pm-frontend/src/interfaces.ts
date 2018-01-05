@@ -26,9 +26,11 @@ export interface RegisterState {
     reason: string
 }
 
-export interface OrginizationsState {
+export interface OrganizationsState {
     fetching: boolean;
-    organizations: any[]
+    owner: any[];
+    member: any[];
+    admin: any[];
 }
 
 export interface NotificationsState {

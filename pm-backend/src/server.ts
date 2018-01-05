@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 });
 app.use(userRoutes);
 
-app.use('/organization', organizationRoutes);
+app.use('/organizations', organizationRoutes);
 
 app.get('/', function (req, res) {
   res.setHeader('Content-Type', 'application/json');

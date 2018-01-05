@@ -5,17 +5,18 @@ import LoginContainer from './containers/user/login.container';
 import Register from './containers/user/register.container';
 import EnsureLoggedInContainer from './containers/navigation/ensure-loggedin.container';
 import EnsureLoggedOutContainer from './containers/navigation/ensure-loggedout.container';
+import Landing from './components/pages/landing/landing.component';
 
 const Routes: React.StatelessComponent = () => {
     return(
         <Switch>
-            <Route  exact path='/' component={() => <div>Cool</div>}/>
+            <Route  exact path='/' component={Landing}/>
             <EnsureLoggedOutContainer>
                 <Route path='/login' component={LoginContainer}/>
                 <Route path='/register' component={Register}/>
             </EnsureLoggedOutContainer>
             <EnsureLoggedInContainer>
-                <Route  exact path='/secret' component={() => <div>Cool</div>}/>
+                <Route  exact path='/' component={() => <div>Cool</div>}/>
             </EnsureLoggedInContainer>
         </Switch>
     );

@@ -9,6 +9,7 @@ export const STOPPED_FETCHING = 'STOPPED_FETCHING';
 export interface setOrgsAction {
 	type: string;
 	organizations: any;
+	role: string;
 }
 
 
@@ -19,17 +20,18 @@ export function fetchingOrgs(fetching: boolean) {
 	}
 }
 
-export function setOrgs(organizations: any): setOrgsAction {
+export function setOrgs(organizations: any, role: string): setOrgsAction {
 	return {
 		type: SET_ORGANIZATIONS,
-		organizations
+		organizations,
+		role
 	}
 }
 
-export function getOrgs() {
+export function getOrgs(role: string) {
 	return((dispatch) => {
 		dispatch(fetchingOrgs(true));
-		apiCall('http://localhost:3000/register', {} , 'POST', false).then((response) => {
+		apiCall('http://localhost:3000/register', {role} , 'POST', false).then((response) => {
 			console.log(response);		
 		}).catch((err) => {
 			console.log(err)
