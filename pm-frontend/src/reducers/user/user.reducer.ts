@@ -3,24 +3,41 @@ import { Action } from 'redux';
 import { UserState } from '../../interfaces';
 
 const refreshToken = localStorage.getItem('refreshToken');
+const token = localStorage.getItem('token');
 const name = localStorage.getItem('name');
-const expiresIn = localStorage.getItem('expiresIn');
+const lastAction = localStorage.getItem('lastAction');
+const stringDate = localStorage.getItem('expiresIn');
+console.log(stringDate);
+const expiresIn = new Date(parseInt(stringDate));
+
+
 
 const emptyState: UserState = {
     startedLogin: false,
     failedLogin: false,
     token: '',
     name:'',
-    refreshToken: ''
+    refreshToken: '',
+    expiresIn: null
 }
 
-const initialState: UserState = {
+const savedState: UserState = {
     startedLogin: false,
     failedLogin: false,
-    token: '',
+    token,
     name,
-    refreshToken    
+    refreshToken,
+    expiresIn    
 };
+
+let initialState = emptyState;
+
+if(lastAction !== '') {
+    //if last action was less then an hour ago 
+    if(new Date().getTime() - parseInt(lastAction) < 60 * 60 * 1000) {
+        initialState = savedState;
+    }
+}
 
 export default function loginReducer(state = initialState, action: Action) {
     switch(action.type) {
@@ -37,7 +54,9 @@ export default function loginReducer(state = initialState, action: Action) {
                 failedLogin: false,
                 token: loginAction.token,
                 name: loginAction.user,
-                refreshToken: loginAction.refreshToken
+                refreshToken: loginAction.refreshToken,
+                //expires in current date plus 30 minutes
+                expiresIn: new Date(Date.now() + (1000 * 60 * 30))
             });
         case userActions.LOGIN_ERROR:
             return Object.assign({}, state, {
@@ -48,7 +67,8 @@ export default function loginReducer(state = initialState, action: Action) {
         case userActions.REFRESH_SUCCESS:
             const refreshAction = action as userActions.RefreshSuccess;
             return Object.assign({}, state, {
-                token: refreshAction.token
+                token: refreshAction.token,
+                expiresIn: new Date(Date.now() + 1000 * 60 * 30)              
             });
         case userActions.LOGOUT:
             return Object.assign({}, state, emptyState);

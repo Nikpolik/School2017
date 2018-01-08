@@ -1,4 +1,4 @@
-export default async function apiCall(url: string, body: any, method: string, secure: boolean): Promise<any> {
+export default async function apiCall(url: string, method: string, secure: boolean, body?: any): Promise<any> {
     let headers = new Headers();
     headers.set('Content-Type', 'application/json');
     const token = localStorage.getItem('token');
@@ -6,13 +6,19 @@ export default async function apiCall(url: string, body: any, method: string, se
         if(!token) {
             throw new Error('Tried to get secure resource but you are not logged in');
         }
-        body.token = token;
+        headers.set('x-access-token', token);        
     }
-    return fetch(url, {
+    const options: any = {
         method,
         headers,
-        body: JSON.stringify(body)
-    }).then((response) => {
+    }
+    if(body) {
+        options.body = JSON.stringify(body)        
+    }
+    return fetch(url, options).then((response) => {
+        if(response.status == 403) {
+            console.log('something bad happened');
+        }
         return response.json();
     });
 }

@@ -23,10 +23,17 @@ export async function createOrganization(id: string, name: string) {
 }
 
 export async function getOrganizations(id: string, role: string): Promise<{success: boolean, organizations: any}> {
-    return OrganizationModel.find({owner: id}).then((result) => {
+    return OrganizationModel.find({[role]: id}).then((result) => {
+        const organizations = result.map((org) => {
+            return {
+                id: org._id,
+                name: org.name,
+                description: org.description
+            }
+        });
         return {
             success: true,
-            organizations: result
+            organizations
         }
     })
 }

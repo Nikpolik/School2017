@@ -1,6 +1,7 @@
 import {Dispatch, Action} from 'redux';
 import apiCall from '../../api/index';
 import { notify } from '../helpers/notifications.actions';
+import { routerActions } from 'react-router-redux';
 
 export const REGISTER_START = 'REGISTER_START';
 export const REGISTER_ERROR = 'REGISTER_ERROR';
@@ -41,13 +42,14 @@ export function registerError(reason?: string, errorFields?: {[name: string] : s
 export function register(username: string, password: string, confirmPassword: string) {
     return((dispatch: Dispatch<any>) => {
         dispatch(registerStart());
-        apiCall('http://localhost:3000/register', {username, password, confirmPassword}, 'POST', false).then((response) => {
+        apiCall('http://localhost:3000/register', 'POST', false, {username, password, confirmPassword}).then((response) => {
             if(response.success == false) {
                dispatch(registerError(response.errorFields));
                return
             }
             dispatch(registerSuccess());
-            notify("Account Registered Successfully", "success");            
+            dispatch(notify("Account Registered Successfully", "success"));
+            dispatch(routerActions.push('/login'));            
         }).catch((reason) => {
             dispatch(registerError(reason.message));
         });

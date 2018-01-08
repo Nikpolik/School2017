@@ -1,26 +1,26 @@
-import { OrganizationState } from '../../interfaces';
+import { OrganizationsState } from '../../interfaces';
 import * as actions from '../../actions/organizations/organizations.actions';
 
-const initialState: OrganizationState = {
+const initialState: OrganizationsState = {
     fetching: false,
     owner: [],
-    admin: [],
-    member: []
+    member: [],
+    admin: []
 }
 
-export function organizationsReducer(state = initialState, action) {
+export default function OrganizationsReducer(state = initialState, action) {
     switch (action.type) {
         case actions.FETCHING_ORGS:
-            const fetching = action.fetching;
+            const fetchAction = action as actions.FetchAction;
             return Object.assign({}, state, {
-                fetching
+                fetching: fetchAction.fetching
             });
         case actions.SET_ORGANIZATIONS:
-            const setAction = action as actions.setOrgsAction;
+            const setAction = action as actions.SetOrgsAction; 
             return Object.assign({}, state, {
-               [setAction.role]: setAction.organizations  
+                [setAction.role]: setAction.organizations
             });
         default:
-            return state
+            return state;
     }
 }

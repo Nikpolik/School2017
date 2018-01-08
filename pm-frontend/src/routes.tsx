@@ -3,21 +3,17 @@ import * as React from 'react';
 
 import LoginContainer from './containers/user/login.container';
 import Register from './containers/user/register.container';
-import EnsureLoggedInContainer from './containers/navigation/ensure-loggedin.container';
-import EnsureLoggedOutContainer from './containers/navigation/ensure-loggedout.container';
-import Landing from './components/pages/landing/landing.component';
+import PublicRoute from './containers/navigation/public-only-route.container'
+import PrivateRoute from './containers/navigation/private-route.container'
+import OrgsView from './containers/organizations/organizations.all.container';
+import Landing from './components/pages/static/landing.component';
 
 const Routes: React.StatelessComponent = () => {
     return(
         <Switch>
-            <Route  exact path='/' component={Landing}/>
-            <EnsureLoggedOutContainer>
-                <Route path='/login' component={LoginContainer}/>
-                <Route path='/register' component={Register}/>
-            </EnsureLoggedOutContainer>
-            <EnsureLoggedInContainer>
-                <Route  exact path='/' component={() => <div>Cool</div>}/>
-            </EnsureLoggedInContainer>
+            <PublicRoute redirectPath={'/'} path='/login' component={LoginContainer}/>
+            <PublicRoute redirectPath={'/'} path='/register' component={Register}/>
+            <PrivateRoute redirectPath={'/login'} exact path='/' component={OrgsView}/>            
         </Switch>
     );
 }

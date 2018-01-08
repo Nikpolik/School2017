@@ -3,6 +3,7 @@ import apiCall from '../../api/index';
 import { routerActions } from 'react-router-redux';
 import { notify } from '../helpers/notifications.actions';
 import { AuthReq, AuthResp } from '../../../../interfaces/index';
+import { State } from '../../interfaces';
 
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
@@ -68,14 +69,16 @@ export function logout() {
     })
 }
 
-export function refresh(refreshToken: string) {
-    return((dispatch: Dispatch<any>) => {
+export function refresh() {
+    return((dispatch: Dispatch<any>, getState: () => State) => {
+        const refreshToken = getState().app.user.refreshToken
+        console.log(refreshToken);
         dispatch(loginStart());
         const refreshRequest: AuthReq = {
             refreshToken,
             type: 'refresh'
         }
-        apiCall('http://localhost:3000/authenticate', refreshRequest, 'POST', false).then((response: AuthResp) => {
+        apiCall('http://localhost:3000/authenticate', 'POST', false, refreshRequest).then((response: AuthResp) => {
             if(response.success == false) {
                 throw new Error(response.reason);
             }
@@ -84,7 +87,6 @@ export function refresh(refreshToken: string) {
             dispatch(logout());
             dispatch(loginError(reason.message));
         });
-            
     });
 
 }
@@ -97,11 +99,11 @@ export function login(username: string, password: string) {
             password: password,
             type: 'password'
         }
-        apiCall('http://localhost:3000/authenticate', authRequest, 'POST', false).then((response: AuthResp) => {
+        apiCall('http://localhost:3000/authenticate', 'POST', false, authRequest).then((response: AuthResp) => {
             if(response.success == false) {
                 throw new Error('Wrong password or username');
             }
-            notify("Account Registered Successfully", "success");                   
+            dispatch(notify("Login Successfully", "success"));                   
             dispatch(loginSuccess(response.name, response.token, response.refreshToken));
             dispatch(routerActions.push('/'));            
         }).catch((reason) => {

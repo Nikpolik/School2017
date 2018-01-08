@@ -23,9 +23,9 @@ organizationRoutes.post('/create', (req, res) => {
     }
 });
 
-organizationRoutes.get('', (req, res) => {
-    getOrganizations(req.body.id, req.query.role).then((result) => {
-         res.json(result);
+organizationRoutes.get('/', (req, res) => {
+    getOrganizations(req.body.id, req.query.role).then((result) => {   
+        res.json(result);
     })
 })
 

@@ -12,7 +12,7 @@ export async function authenticate(params: AuthReq): Promise<AuthResp> {
             id: result.user._id
         }
         const token = jswt.sign(payload, config.secret, {
-            expiresIn: '25m'
+            expiresIn: '30m'
         });
         let refreshToken = '';
         if(result.getRefresh) {

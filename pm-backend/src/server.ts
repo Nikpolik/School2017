@@ -3,6 +3,7 @@ import * as bodyParser from 'body-parser';
 import * as session from 'express-session';
 import * as mongoose from 'mongoose';
 import * as morgan from 'morgan';
+import * as cors from 'cors';
 
 import config from './config';
 
@@ -29,15 +30,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(morgan('dev'));
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*') 
-  next(); 
-});
+app.use(cors());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type")
-  next();
-});
 app.use(userRoutes);
 
 app.use('/organizations', organizationRoutes);

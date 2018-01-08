@@ -11,6 +11,9 @@ class Organization extends Typegoose {
     @prop({required: true, ref: User})
     owner: Ref<User>;
 
+    @prop({required: true})
+    description: string;
+
     @arrayProp({ itemsRef: User })
     admins?: Ref<User>[];
 
