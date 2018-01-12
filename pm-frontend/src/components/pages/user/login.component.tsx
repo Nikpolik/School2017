@@ -50,7 +50,6 @@ export default class Login extends React.Component<LoginProps,{}> {
   }
   
   render() {
-    console.log('rendering');
     let content = (
     <Grid style={style}>
       <img src={gearIcon} alt="" style={imageStyle}/>

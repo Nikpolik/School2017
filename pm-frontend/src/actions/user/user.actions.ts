@@ -72,7 +72,6 @@ export function logout() {
 export function refresh() {
     return((dispatch: Dispatch<any>, getState: () => State) => {
         const refreshToken = getState().app.user.refreshToken
-        console.log(refreshToken);
         dispatch(loginStart());
         const refreshRequest: AuthReq = {
             refreshToken,

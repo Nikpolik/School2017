@@ -15,22 +15,12 @@ export default class OrgCreate extends React.Component<{}, OrgCreateState> {
     name: HTMLInputElement;
     description: HTMLTextAreaElement;
     
-    constructor(props) {
-        super(props);
-        this.state = {
-            modalOpen: false
-        }
-    }
-
-    open = () => this.setState({modalOpen: true});
-    close = () => this.setState({modalOpen: false});
-
     render() {
         return(
             <Modal
-                open={this.state.modalOpen} 
                 size='small'
-                trigger={<Button onClick={() => this.open()} style={buttonStyle} icon='plus' floated='right'/>}>
+                closeIcon
+                trigger={<Button style={buttonStyle} icon='plus' floated='right'/>}>
                 <Modal.Header>Create New Organization</Modal.Header>
                 <Modal.Content>
                     <Form>
@@ -45,7 +35,6 @@ export default class OrgCreate extends React.Component<{}, OrgCreateState> {
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button negative onClick={() => this.close()}>Close</Button>
                     <Button positive>Create</Button>
                 </Modal.Actions>
             </Modal>

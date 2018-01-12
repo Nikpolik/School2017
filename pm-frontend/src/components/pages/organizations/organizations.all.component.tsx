@@ -25,7 +25,6 @@ export default class OrgsView extends React.Component<OrgsViewProps, {}> {
     
     componentWillMount() {
         if(!this.props.fetching) {
-                console.log('Fetching');
                 this.props.getOrgs('owner');
                 this.props.getOrgs('member');
                 this.props.getOrgs('admin');

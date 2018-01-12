@@ -7,7 +7,6 @@ const token = localStorage.getItem('token');
 const name = localStorage.getItem('name');
 const lastAction = localStorage.getItem('lastAction');
 const stringDate = localStorage.getItem('expiresIn');
-console.log(stringDate);
 const expiresIn = new Date(parseInt(stringDate));
 
 
