@@ -42,7 +42,7 @@ export function registerError(reason?: string, errorFields?: {[name: string] : s
 export function register(username: string, password: string, confirmPassword: string) {
     return((dispatch: Dispatch<any>) => {
         dispatch(registerStart());
-        apiCall('http://localhost:3000/register', 'POST', false, {username, password, confirmPassword}).then((response) => {
+        apiCall('register', 'POST', false, {username, password, confirmPassword}).then((response) => {
             if(response.success == false) {
                dispatch(registerError(response.errorFields));
                return

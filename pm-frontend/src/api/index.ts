@@ -1,5 +1,8 @@
-export default async function apiCall(url: string, method: string, secure: boolean, body?: any): Promise<any> {
+export default async function apiCall(path: string, method: string, secure: boolean, body?: any): Promise<any> {
     let headers = new Headers();
+    const baseUrl = 'http://dreambooking.ddns.net:9100/'
+    const url = baseUrl + path
+    console.log(url);
     headers.set('Content-Type', 'application/json');
     const token = localStorage.getItem('token');
     if(secure) {

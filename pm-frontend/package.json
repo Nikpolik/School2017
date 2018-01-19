@@ -22,7 +22,8 @@
     "redux": "^3.7.2",
     "redux-idle-monitor": "^0.7.0",
     "redux-thunk": "^2.2.0",
-    "semantic-ui-react": "^0.75.1"
+    "semantic-ui-react": "^0.75.1",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "@types/react-redux": "^5.0.12",
@@ -30,6 +31,7 @@
     "@types/react-router-dom": "^4.2.0",
     "@types/react-router-redux": "^5.0.7",
     "@types/redux": "^3.6.0",
+    "@types/underscore": "^1.8.7",
     "awesome-typescript-loader": "^3.3.0",
     "file-loader": "^1.1.6",
     "redux-devtools-extension": "^2.13.2",

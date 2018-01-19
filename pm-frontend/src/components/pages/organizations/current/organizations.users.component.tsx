@@ -13,15 +13,14 @@ interface UserListProps {
 }
 
 export default class UserList extends React.Component<UserListProps> {
+    
     componentWillMount() {
         if(!this.props.gotInfo.admins) {
-            console.log('getting admins');
             if(this.props.admins.length > 0) {
                 this.props.loadInfo(this.props.admins, 'admins')
             }
         }
         if(!this.props.gotInfo.members) {
-            console.log('getting members');
             if(this.props.members.length > 0) {
                 this.props.loadInfo(this.props.members, 'members');
             }
@@ -29,12 +28,10 @@ export default class UserList extends React.Component<UserListProps> {
     }
 
     render() {
-        console.log(this.props.gotInfo);
         let members = <div>No users yet you should add some from the invite button</div>
         let admins = <div>No admins yet you should add some from the invite button</div>
         if(this.props.gotInfo.members) {
             let membersList = this.props.members.map((member) => {
-                console.log(member);
                 return(<div key={member.id}>{member.username}, </div>)
             })
             members = <List>{membersList}</List>

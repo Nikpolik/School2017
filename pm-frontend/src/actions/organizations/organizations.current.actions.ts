@@ -47,7 +47,7 @@ export function setUserInfo(infoList, role) {
 export function getCurrentOrg(id: string) {
 	return((dispatch) => {
 		dispatch(fetchSingleOrg(true));
-		apiCall('http://localhost:3000/organizations/' + id, 'GET', true).then((response) => {
+		apiCall('organizations/' + id, 'GET', true).then((response) => {
 			dispatch(setCurrentOrg(response.organization));
 		}).catch((err) => {
 			console.log('error?');
@@ -61,7 +61,7 @@ export  function getUsersInfo(usersId: string[], role: string) {
 	return(async (dispatch) => {	
 		const infoList = []
 		for(let id of usersId) {
-			let result = await apiCall('http://localhost:3000/info/' + id, 'GET', false);
+			let result = await apiCall('info/' + id, 'GET', false);
 			infoList.push({
 				id,
 				username: result.info.name

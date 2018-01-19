@@ -9,18 +9,14 @@ const headerStyle = {
     paddingLeft: '20px', 
 }
 export default class OrgCurrent extends React.Component<any, {}> {
+    
     render() {
-        console.log(this.props);
         if(this.props.fetching) {
-            console.log('fetching');
             return <Loader/>
         }
         if(!this.props._id) {
-            console.log(this.props);
-            console.log('something went wrong go back');
             return <Redirect to="/"/>
         }
-        console.log('All normal');
         return(
             <Grid>
                 <Grid.Column width={14}>

@@ -53,7 +53,7 @@ export function appendSingleOrg(role: string, organization: Organization): Appen
 export function createOrg(name: string, description: string) {
 	return((dispatch) => {
 		dispatch(fetchingOrgs(true));
-		apiCall('http://localhost:3000/organizations/create', 'POST', true, {name, description}).then((response) => {
+		apiCall('organizations/create', 'POST', true, {name, description}).then((response) => {
 			if(response.success) {
 				dispatch(appendSingleOrg('owner', response.organization));
 				dispatch(notify('Created Organization', 'success'))		
@@ -68,7 +68,7 @@ export function createOrg(name: string, description: string) {
 export function getOrgs(role: string) {
 	return((dispatch) => {
 		dispatch(fetchingOrgs(true));
-		apiCall('http://localhost:3000/organizations/?role=' + role, 'GET', true).then((response) => {
+		apiCall('organizations/?role=' + role, 'GET', true).then((response) => {
 			dispatch(setOrgs(response.organizations, role));
 		}).catch((err) => {
 			console.log(err)
