@@ -12,16 +12,18 @@ const initialState: RegisterState = {
 export default function loginReducer(state = initialState, action: Action) {
     switch(action.type) {
         case registerActions.REGISTER_START:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 startedLogin: true,
                 failedRegister: false,
-            });
+            }
         case registerActions.REGISTER_SUCCESS:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 startedRegister: false,
                 failedRegister: false,
                 errorFields: {}
-            });
+            }
         case registerActions.REGISTER_ERROR:
             const validationError = action as registerActions.RegisterErrorAction
             const newState: any = {}
@@ -31,11 +33,12 @@ export default function loginReducer(state = initialState, action: Action) {
             if(validationError.reason) {
                 newState.reason = validationError;
             }
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 startedRegister: false,
                 failedRegister: true,
                 ...newState
-            });
+            }
         default:
             return initialState;
     }

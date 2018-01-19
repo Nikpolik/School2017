@@ -17,7 +17,7 @@ export function checkAuth (req: Request, res: Response, next: NextFunction) {
                     reason: e.message
                    });
                } else {
-                   req.body.id = decoded.id;
+                   req.body.user = decoded.id;
                    next();
                } 
             });

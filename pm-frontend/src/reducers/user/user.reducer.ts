@@ -41,14 +41,16 @@ if(lastAction !== '') {
 export default function loginReducer(state = initialState, action: Action) {
     switch(action.type) {
         case userActions.LOGIN_START:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 startedLogin: true,
                 failedLogin: false,
                 token: ''
-            });
+            }
         case userActions.LOGIN_SUCCESS:
             const loginAction = action as userActions.LoginSuccess;
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 startedLogin: false,
                 failedLogin: false,
                 token: loginAction.token,
@@ -56,21 +58,25 @@ export default function loginReducer(state = initialState, action: Action) {
                 refreshToken: loginAction.refreshToken,
                 //expires in current date plus 30 minutes
                 expiresIn: new Date(Date.now() + (1000 * 60 * 30))
-            });
+            }
         case userActions.LOGIN_ERROR:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 startedLogin: false,
                 failedLogin: true,
                 token: ''
-            });
+            }
         case userActions.REFRESH_SUCCESS:
             const refreshAction = action as userActions.RefreshSuccess;
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 token: refreshAction.token,
-                expiresIn: new Date(Date.now() + 1000 * 60 * 30)              
-            });
+                expiresIn: new Date(Date.now() + 1000 * 60 * 30)    
+            }
         case userActions.LOGOUT:
-            return Object.assign({}, state, emptyState);
+            return {
+                ...emptyState
+            }
         default:           
             return state;
     }

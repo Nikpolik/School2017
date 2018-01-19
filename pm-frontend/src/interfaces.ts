@@ -6,7 +6,8 @@ export interface State {
         user: UserState,
         register: RegisterState,
         notifications: NotificationsState,
-        organizations: OrganizationsState
+        organizations: OrganizationsState,
+        current: OrganizationsCurrentState
     }
     router: RouterState
 }
@@ -17,7 +18,7 @@ export interface UserState {
     token: string | null;
     refreshToken: string | null;
     name: string | null;
-    expiresIn: Date | null;
+    expiresIn: Date
 };
 
 export interface RegisterState {
@@ -43,4 +44,19 @@ export interface Organization {
     id: string;
     name: string;
     description: string;
+}
+
+export interface OrganizationsCurrentState {
+    fetching: boolean;
+    _id: string;
+    name: string;
+    owner: string;
+    description: string;
+    projects: string[];
+    gotInfo: {
+        members: boolean;
+        admins: boolean;
+    }
+    members: {userId: string; name: string}[] | string[];
+    admins: {userId: string; name: string| null}[];
 }

@@ -1,1 +1,1 @@
-1) Need to rewrite everything to use middleware api call as seen on https://auth0.com/blog/secure-your-react-and-redux-app-with-jwt-authentication/
+1. Need to rewrite everything to use middleware api call as seen on https://auth0.com/blog/secure-your-react-and-redux-app-with-jwt-authentication/

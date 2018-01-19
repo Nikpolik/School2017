@@ -9,6 +9,8 @@ interface OrgsViewProps {
     admin: Organization[];
     member: Organization[];
     fetching: boolean;
+    createOrg: (name: string, description: string) => void;
+    gotToCurrent: (id: string) => void;
 }
 
 const innerStyle = {
@@ -26,8 +28,6 @@ export default class OrgsView extends React.Component<OrgsViewProps, {}> {
     componentWillMount() {
         if(!this.props.fetching) {
                 this.props.getOrgs('owner');
-                this.props.getOrgs('member');
-                this.props.getOrgs('admin');
         }
     }
 
@@ -43,38 +43,48 @@ export default class OrgsView extends React.Component<OrgsViewProps, {}> {
         if(this.props.owner.length > 0) {
             let ownerList = [];
             for(let organization of this.props.owner) {
-                ownerList.push({
-                    header: organization.name,
-                    description: organization.description
-                });
+                ownerList.push(
+                    <Card key={organization.id} onClick={() => this.props.gotToCurrent(organization.id)}>
+                        <Card.Content><Card.Header>{organization.name}</Card.Header></Card.Content>
+                        <Card.Content>
+                            {organization.description}
+                        </Card.Content>
+                    </Card>);
             }
-            ownerContent = <Card.Group items={ownerList}/>
+            ownerContent = <Card.Group>{ownerList}</Card.Group>
         }
         if(this.props.member.length > 0) {
             let memberList = [];
-            for(let organization of this.props.owner) {
-                memberList.push({
-                    header: organization.name,
-                    description: organization.description
-                });
+            for(let organization of this.props.member) {
+                memberList.push(
+                    <Card key={organization.id}>
+                        <Card.Content><Card.Header>{organization.name}</Card.Header></Card.Content>
+                        <Card.Content>
+                            {organization.description}
+                        </Card.Content>
+                    </Card>);
             }
-            memberContent = <Card.Group items={memberList}/>
+            memberContent = <Card.Group>{memberList}</Card.Group>
         }
         if(this.props.admin.length > 0) {
             let adminList = [];
-            for(let organization of this.props.owner) {
-                adminList.push({
-                    header: organization.name,
-                    description: organization.description
-                });
+            for(let organization of this.props.member) {
+                console.log(organization);
+                adminList.push(
+                    <Card key={organization.id}>
+                        <Card.Content><Card.Header>{organization.name}</Card.Header></Card.Content>
+                        <Card.Content>
+                            {organization.description}
+                        </Card.Content>
+                    </Card>);
             }
-            adminContent = <Card.Group items={adminList}/>
+            adminContent = <Card.Group>{adminList}</Card.Group>
         }
         return(
             <div>
                 <Segment vertical><Header as='h1' style={headerStyle}>Organizations</Header></Segment>
                 <Segment vertical>
-                    <OrgCreate/>  
+                    <OrgCreate create={this.props.createOrg}/>  
                     <div style={innerStyle}>
                         <Header as='h2'>Owner</Header>
                         {ownerContent}

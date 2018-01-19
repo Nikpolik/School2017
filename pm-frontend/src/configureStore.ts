@@ -27,13 +27,13 @@ let oldUser: string = '';
 store.subscribe(() => {
   const state: State = store.getState();
   let currentUser = state.app.user.name;
-  // if(currentUser !== oldUser &&  currentUser !== '') {
-  //     oldUser = currentUser;     
-  //     store.dispatch(idleMonitor.actions.start());
-  // } else if (currentUser !== oldUser) {
-  //     oldUser = currentUser;        
-  //     store.dispatch(idleMonitor.actions.stop());
-  // }
+  if(currentUser !== oldUser &&  currentUser !== '') {
+      oldUser = currentUser;     
+      store.dispatch(idleMonitor.actions.start());
+  } else if (currentUser !== oldUser) {
+      oldUser = currentUser;        
+      store.dispatch(idleMonitor.actions.stop());
+  }
   localStorage.setItem('lastAction', new Date().getTime().toString());
   localStorage.setItem('token', state.app.user.token);
   localStorage.setItem('refreshToken', state.app.user.refreshToken);

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import {authenticate, register} from '../api/user.api';
+import {authenticate, register, viewPublicInfo} from '../api/user.api';
 
 import { RegisterReq, AuthReq, AuthResp } from '../../../interfaces/index';
 const userRoutes: Router = Router();
@@ -45,4 +45,9 @@ userRoutes.post('/register', (req, res) => {
 
 });
 
+userRoutes.get('/info/:id', (req, res) => {
+    viewPublicInfo(req.params.id).then((result) => {
+        res.json(result);
+    })
+});
 export {userRoutes};

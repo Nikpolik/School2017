@@ -11,8 +11,8 @@ class Organization extends Typegoose {
     @prop({required: true, ref: User})
     owner: Ref<User>;
 
-    @prop({required: true})
-    description: string;
+    @prop()
+    description?: string;
 
     @arrayProp({ itemsRef: User })
     admins?: Ref<User>[];
@@ -23,6 +23,23 @@ class Organization extends Typegoose {
     @arrayProp({ itemsRef: Project })
     projects?: Ref<Project>[];
 
+    @instanceMethod
+    getPermissions(this: InstanceType<Organization>, user: string): Number {
+        if(this.owner.toString() === user) {
+            return 0
+        }
+        if(this.members) {
+            if(this.members.indexOf(user) !== -1) {
+                return 1
+            }
+        }
+        if(this.admins) {
+            if(this.admins.indexOf(user) !== -1) {
+                return 2
+            }
+        }
+        return -1;
+    }
 }
 
 const OrganizationModel = new Organization().getModelForClass(Organization);

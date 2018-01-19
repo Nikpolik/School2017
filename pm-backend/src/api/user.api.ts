@@ -106,3 +106,20 @@ async function validateAuthParams(params: AuthReq): Promise<{isValid: boolean; u
     console.log('out');
     throw new Error('Could not find auth method');
 }
+
+export async function viewPublicInfo(id: string): Promise<{success: boolean, info?: any, reason?: string}> {
+    return user.UserModel.findById(id).then((result) => {
+        if(result) {
+            return {
+                success: true,
+                info: {
+                    name: result.username
+                }
+            }
+        }
+        return {
+            success: false,
+            reason: 'User not found'
+        }
+    });
+}

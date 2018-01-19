@@ -18,7 +18,7 @@ export default class NavBar extends React.Component<NavBarProps, {}> {
     LoggedInControls() {
         if(this.props.name !== '') {
             return(
-                <Menu.Menu position={"right"}>
+            <Menu.Menu position={"right"}>
                 <Menu.Item name='login'>{this.props.name}</Menu.Item>
                 <Menu.Item link onClick={()=>this.props.logout()}>Logout</Menu.Item>
             </Menu.Menu>
@@ -37,7 +37,7 @@ export default class NavBar extends React.Component<NavBarProps, {}> {
         
         return(
         <Menu>
-            <Menu.Item header>Project Easy</Menu.Item>
+            <Menu.Item header link onClick={() => this.props.push('/')}>Project Easy</Menu.Item>
             <this.LoggedInControls/>
         </Menu>)
     }
