@@ -8,7 +8,27 @@ const headerStyle = {
     paddingBottom: '30px',
     paddingLeft: '20px', 
 }
-export default class OrgCurrent extends React.Component<any, {}> {
+
+interface OrgCurrentProps {
+    fetching: boolean;
+    _id: string;
+    name: string;
+    owner: string;
+    description: string;
+    projects: any;
+    members: any;
+    admins: any;
+    gotInfo: {
+        admins: boolean,
+        members: boolean
+    },
+    permissions: Number;
+    loadInfo: (userList: any, role: string) => void;
+    inviteUser: (userId: string, role: string) => void;
+    editInfo: (info: {description?: string, name?: string}) => void;
+}
+
+export default class OrgCurrent extends React.Component<OrgCurrentProps, {}> {
     
     render() {
         if(this.props.fetching) {
@@ -33,7 +53,17 @@ export default class OrgCurrent extends React.Component<any, {}> {
                     </Segment>
                 </Grid.Column>
                 <Grid.Column width={2}>
-                    <OrgsSideBar loadInfo={this.props.loadInfo} members={this.props.members} admins={this.props.admins} gotInfo={this.props.gotInfo}/>
+                    <OrgsSideBar 
+                        name={this.props.name}
+                        description={this.props.description}
+                        loadInfo={this.props.loadInfo} 
+                        members={this.props.members} 
+                        admins={this.props.admins} 
+                        gotInfo={this.props.gotInfo} 
+                        inviteUser={this.props.inviteUser}
+                        permissions={this.props.permissions}
+                        editInfo={this.props.editInfo}
+                    />
                 </Grid.Column>
             </Grid>
         )

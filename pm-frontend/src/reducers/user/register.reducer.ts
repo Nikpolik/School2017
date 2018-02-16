@@ -27,8 +27,9 @@ export default function loginReducer(state = initialState, action: Action) {
         case registerActions.REGISTER_ERROR:
             const validationError = action as registerActions.RegisterErrorAction
             const newState: any = {}
+            console.log(validationError.reason);
             if(validationError.errorFields) {
-                newState.errorFields = validationError;
+                newState.errorFields = validationError.errorFields;
             }
             if(validationError.reason) {
                 newState.reason = validationError;

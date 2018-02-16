@@ -1,15 +1,16 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as session from 'express-session';
-import * as mongoose from 'mongoose';
+import mongoose = require('mongoose');
 import * as morgan from 'morgan';
 import * as cors from 'cors';
 
 import config from './config';
 
-import {userRoutes, organizationRoutes} from './routes/index';
+import { userRoutes, organizationRoutes, projectRoutes } from './routes/index';
 
 const app: express.Application = express();
+mongoose.Promise = Promise;
 
 mongoose.connect(config.database);
 
@@ -18,7 +19,7 @@ mongoose.connection.on("error", () => {
   process.exit();
 });
 
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 9100);
 
 app.set('mySecret', config.secret);
 
@@ -32,9 +33,10 @@ app.use(morgan('dev'));
 
 app.use(cors());
 
-app.use(userRoutes);
+app.use('/user', userRoutes);
 
 app.use('/organizations', organizationRoutes);
+app.use('/projects', projectRoutes);
 
 app.get('/', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
@@ -47,8 +49,8 @@ app.post('/login', function (req, res) {
   setTimeout(() => res.send({hello: 'Hi i am josh'}), 2000);
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+app.listen(app.get('port'), function () {
+  console.log('Example app listening on port 9100!')
 })
 
 

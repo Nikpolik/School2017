@@ -13,16 +13,17 @@ export interface LoginProps {
   goToRegister: any;
 }
 
-const style = {
-  position: 'absolute',
-  top: '10%',
-  left: '40%',
-  transform: 'scale(2) zoom: 0.5 translateX(-50%) translateY(-50%)'
-}
+// const style = {
+//   position: 'absolute',
+//   top: '10%',
+//   left: '40%',
+//   transform: 'scale(2) zoom: 0.5 translateX(-50%) translateY(-50%)'
+// }
 
 const imageStyle: React.CSSProperties = {
-  width:'25%',
-  height: '25%'
+  paddingTop: '1em',
+  width:'15%',
+  height: '15%'
 }
 
 
@@ -51,9 +52,8 @@ export default class Login extends React.Component<LoginProps,{}> {
   
   render() {
     let content = (
-    <Grid style={style}>
-      <img src={gearIcon} alt="" style={imageStyle}/>
-      <Grid.Row></Grid.Row>
+    <Grid verticalAlign="middle" textAlign='center'>
+      <Image src={gearIcon} style={imageStyle}/>
       <Grid.Row>
         <Form onSubmit={(e) => e.preventDefault()}>
           <Header>Welcome to Project Easy</Header>

@@ -10,7 +10,9 @@ const style = {
     position: "absolute",
     top: '3.5rem',
     right: '1.5rem',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    zIndex: 9999
+
 } as React.CSSProperties
 
 export default class Notifications extends React.Component<NotificationsProps, {}> {

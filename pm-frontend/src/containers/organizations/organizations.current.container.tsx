@@ -8,7 +8,9 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    loadInfo: (userList: string[], role: string) => dispatch(actions.getUsersInfo(userList, role))
+    loadInfo: (userList: string[], role: string) => dispatch(actions.getUsersInfo(userList, role)),
+    inviteUser: (userId: string, role: string) => dispatch(actions.inviteUser(userId, role)),
+    editInfo: (info: {description?: string, name?: string}) => dispatch(actions.editOrg(info))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrgCurrent);

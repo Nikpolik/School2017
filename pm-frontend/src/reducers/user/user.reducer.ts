@@ -29,9 +29,9 @@ const savedState: UserState = {
     expiresIn    
 };
 
-let initialState = emptyState;
+let initialState = {...emptyState};
 
-if(lastAction !== '') {
+if(lastAction !== '' && token ) {
     //if last action was less then an hour ago 
     if(new Date().getTime() - parseInt(lastAction) < 60 * 60 * 1000) {
         initialState = savedState;
@@ -74,6 +74,7 @@ export default function loginReducer(state = initialState, action: Action) {
                 expiresIn: new Date(Date.now() + 1000 * 60 * 30)    
             }
         case userActions.LOGOUT:
+            localStorage.clear();
             return {
                 ...emptyState
             }

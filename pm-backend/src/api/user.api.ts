@@ -1,7 +1,8 @@
 import * as jswt from 'jsonwebtoken';
-import { user } from '../models/index';
+import { User, UserModel } from '../models/user.model';
 import config from '../config';
 import { AuthReq, AuthResp, RegisterReq, RegisterResp} from '../../../interfaces/index';
+import { OrganizationModel } from '../models/organization/organization.model';
 
 export async function authenticate(params: AuthReq): Promise<AuthResp> {
      return validateAuthParams(params).then((result) => {
@@ -41,7 +42,7 @@ export async function register(userForm: RegisterReq): Promise<RegisterResp> {
             errorFields: {confirmPassword: 'Password confirmation is missing'}
         }
     }  
-    const userResult = await user.UserModel.findOne({username: userForm.username});
+    const userResult = await UserModel.findOne({username: userForm.username});
     if(userResult) {
         return {
             success: false,
@@ -60,7 +61,7 @@ export async function register(userForm: RegisterReq): Promise<RegisterResp> {
             errorFields: {confirmPassword: 'Passwords did not match'}
         };
     }
-    const u = new user.UserModel({username:userForm.username, password: userForm.password});
+    const u = new UserModel({username:userForm.username, password: userForm.password});
     return u.save().then((_) => {
         return({
             success: true
@@ -81,14 +82,14 @@ async function validateAuthParams(params: AuthReq): Promise<{isValid: boolean; u
         if(typeof decoded === 'string') {
             throw new Error(decoded);
         }
-        return user.UserModel.findById(decoded.id).then((user) => {
+        return UserModel.findById(decoded.id).then((user) => {
             if(!user) {
                 throw new Error('Could not find user');
             }
             return({isValid: true, user, getRefresh: false});
         });
     } else if (params.type === 'password' && params.name) {
-        return user.UserModel.findOne({username: params.name}).then((user) => {
+        return UserModel.findOne({username: params.name}).then((user) => {
             if(!params.password) {
                 throw new Error('Invalid Password');
             }
@@ -108,7 +109,7 @@ async function validateAuthParams(params: AuthReq): Promise<{isValid: boolean; u
 }
 
 export async function viewPublicInfo(id: string): Promise<{success: boolean, info?: any, reason?: string}> {
-    return user.UserModel.findById(id).then((result) => {
+    return UserModel.findById(id).then((result) => {
         if(result) {
             return {
                 success: true,
@@ -120,6 +121,33 @@ export async function viewPublicInfo(id: string): Promise<{success: boolean, inf
         return {
             success: false,
             reason: 'User not found'
+        }
+    });
+}
+
+export async function getInvitations(user: string): Promise<{success: boolean, invitations?: any, reason?: string}> {
+    return UserModel.findById(user).then( async (user) => {
+        if(!user) {
+            throw new Error('User not found, that should be impossible')
+        }
+        const invitations = []
+        for(let invitation of user.invitations) {
+            let org = await OrganizationModel.findById(invitation.organization);
+            if(!org) {
+                throw new Error('Organization doesnt exist');
+            }
+            let name = org.name;
+            console.log('test')
+            invitations.push({
+                id: invitation.organization,
+                role: invitation.role,
+                name
+            }); 
+        }
+        console.log('done');
+        return {
+            success: true,
+            invitations
         }
     });
 }

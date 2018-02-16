@@ -5,6 +5,8 @@ import registerReducer from './user/register.reducer';
 import NotificationsReducer from './helpers/notifications.reducer';
 import OrganizationsReducer from './organization/organizations.reducer';
 import OrganizationsCurrentReducer from './organization/organizations.current.reducer';
+import InvitationsReducer from './invitations/invitations.reducer';
+
 // const appReducer = combineReducers
 
 const appReducer = combineReducers({
@@ -12,7 +14,8 @@ const appReducer = combineReducers({
     register: registerReducer,
     notifications: NotificationsReducer,
     organizations: OrganizationsReducer,
-    current: OrganizationsCurrentReducer
+    current: OrganizationsCurrentReducer,
+    invitations: InvitationsReducer
 });
 
 export default appReducer;

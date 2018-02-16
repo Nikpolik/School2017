@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Modal, Menu, Segment, Header, Input, Icon, Button, List } from 'semantic-ui-react';
+import { Modal, Menu, Segment, Header, Input, Icon, Button, List, Select } from 'semantic-ui-react';
 import { type } from 'os';
 
 interface UserListProps {
@@ -10,10 +10,24 @@ interface UserListProps {
     members: {id: string, username: string}[];
     admins: {id: string, username: string}[];
     loadInfo: (userList: any, role: string) => void;
+    inviteUser: (username: string, role: string) => void;
+    permissions: Number
 }
 
-export default class UserList extends React.Component<UserListProps> {
+const options = [
+    {key: 'member', text: 'member',value: 'member'}
+    ,{key: 'admin', text: 'admin', value: 'admin'}
+];
+export default class UserList extends React.Component<UserListProps, {username: string, role: any}> {
     
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            role: 'member'
+        }
+    }
+
     componentWillMount() {
         if(!this.props.gotInfo.admins) {
             if(this.props.admins.length > 0) {
@@ -24,6 +38,27 @@ export default class UserList extends React.Component<UserListProps> {
             if(this.props.members.length > 0) {
                 this.props.loadInfo(this.props.members, 'members');
             }
+        }
+    }
+
+    addUser(this: UserList) {
+        const { role, username } = this.state;
+        this.props.inviteUser(username, role)
+    }
+
+    getInvite(permissions) {
+        console.log(permissions);
+        if(permissions > 0) {
+            return (
+            <div>
+                <Header>Invite</Header>
+                <Input type='text' placeholder='Invite...' action>
+                    <input  onChange={(event) => this.setState({username: event.target.value})}/>
+                    <Select onChange={(event, data) => this.setState({role: data.value})} compact options={options} defaultValue='member' />
+                    <Button type='submit' onClick={this.addUser.bind(this)}>Invite</Button>
+                </Input>
+            </div>
+            )
         }
     }
 
@@ -56,8 +91,7 @@ export default class UserList extends React.Component<UserListProps> {
                     <Header>Members</Header>
                     {members}
                     <br/>
-                    <Header>Invite</Header>
-                    <Input action={<Button>Invite</Button>}/>
+                    {this.getInvite(this.props.permissions)}
                 </Modal.Content>
             </Modal>
         )    

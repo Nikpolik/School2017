@@ -26,15 +26,15 @@ export function registerSuccess() {
     });
 }
 
-export function registerError(reason?: string, errorFields?: {[name: string] : string}) {
+export function registerError(error: {reason?: string, errorFields?: {[name: string] : string}}) {
     const action: RegisterErrorAction = {
         type: REGISTER_ERROR
     }
-    if(reason) {
-        action.reason = reason;
+    if(error.reason) {
+        action.reason = error.reason;
     }
-    if(errorFields) {
-        action.errorFields = errorFields;
+    if(error.errorFields) {
+        action.errorFields = error.errorFields;
     }
     return(action);
 };
@@ -42,16 +42,17 @@ export function registerError(reason?: string, errorFields?: {[name: string] : s
 export function register(username: string, password: string, confirmPassword: string) {
     return((dispatch: Dispatch<any>) => {
         dispatch(registerStart());
-        apiCall('register', 'POST', false, {username, password, confirmPassword}).then((response) => {
+        apiCall('user/register', 'POST', false, {username, password, confirmPassword}).then((response) => {
+            console.log(response);
             if(response.success == false) {
-               dispatch(registerError(response.errorFields));
+               dispatch(registerError({errorFields: response.errorFields}));
                return
             }
             dispatch(registerSuccess());
             dispatch(notify("Account Registered Successfully", "success"));
             dispatch(routerActions.push('/login'));            
         }).catch((reason) => {
-            dispatch(registerError(reason.message));
+            dispatch(registerError({reason: reason.message}));
         });
     });
 }

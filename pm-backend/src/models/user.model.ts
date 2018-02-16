@@ -11,7 +11,7 @@ export class Invitation {
   organization: string
 
   @prop({required: true})
-  position: string;
+  role: string;
 }
 
 @pre<User>('save', function(next) {
@@ -39,7 +39,7 @@ class User extends Typegoose {
   age: number;
   
   @arrayProp({items: Invitation})
-  invitations?: Invitation[];
+  invitations: Invitation[];
 
 
   @instanceMethod

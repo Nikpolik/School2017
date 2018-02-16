@@ -1,6 +1,6 @@
-import {Dispatch, Action} from 'redux';
+import { Dispatch, Action } from 'redux';
 import apiCall from '../../api/index';
-import { Organization } from '../../interfaces';
+import { Organization, State } from '../../interfaces';
 import { notify } from '../helpers/notifications.actions';
 
 
@@ -55,13 +55,20 @@ export function createOrg(name: string, description: string) {
 		dispatch(fetchingOrgs(true));
 		apiCall('organizations/create', 'POST', true, {name, description}).then((response) => {
 			if(response.success) {
-				dispatch(appendSingleOrg('owner', response.organization));
-				dispatch(notify('Created Organization', 'success'))		
+				console.log(response.organization);
+				dispatch(appendSingleOrg('owner', response.organization.map((organization) => ({
+					...organization,
+					projects: {
+						id: organization.projects.map((id) => {id})
+					}
+				}))));
+				dispatch(notify('Created Organization', 'success'))
+				dispatch(fetchingOrgs(false));		
 			}
 		}).catch((err) => {
-			console.log(err);
+			console.log(err.message)
+			dispatch(fetchingOrgs(false));
 		});
-		dispatch(fetchingOrgs(false));
 	});
 }
 
@@ -70,8 +77,9 @@ export function getOrgs(role: string) {
 		dispatch(fetchingOrgs(true));
 		apiCall('organizations/?role=' + role, 'GET', true).then((response) => {
 			dispatch(setOrgs(response.organizations, role));
+			dispatch(fetchingOrgs(false));
 		}).catch((err) => {
-			console.log(err)
+            console.log(err.message)
 			dispatch(fetchingOrgs(false));
 		});			
 	});	

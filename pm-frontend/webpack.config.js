@@ -35,8 +35,7 @@ module.exports = {
         ]
     },
     devServer: {
-        host: '0.0.0.0',
-        public: 'dreambooking.ddns.net:9000',
+        host: 'localhost',
         compress: true,
         port: 9000,
         open: true,

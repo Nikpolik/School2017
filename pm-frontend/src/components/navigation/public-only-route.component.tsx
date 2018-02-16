@@ -20,6 +20,7 @@ export default class PublicRoute extends React.Component<PublicRouteProps, {}> {
         if(user === '') {
           return <this.props.component {...props}/>
         } else {
+          console.log('Get out of here!');
           return <Redirect to={redirectPath}/>
         }
       }}/>

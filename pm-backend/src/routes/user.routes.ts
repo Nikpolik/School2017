@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import {authenticate, register, viewPublicInfo} from '../api/user.api';
+import {authenticate, register, viewPublicInfo, getInvitations} from '../api/user.api';
+import { checkAuth } from '../helpers/authenticate';
 
 import { RegisterReq, AuthReq, AuthResp } from '../../../interfaces/index';
 const userRoutes: Router = Router();
@@ -32,10 +33,10 @@ userRoutes.post('/register', (req, res) => {
         const userForm = req.body;
         console.log(userForm);
         register({username: userForm.username, password: userForm.password, confirmPassword: userForm.confirmPassword}).then((formValidation) => {
+            console.log(formValidation);
             res.json(formValidation);
         });
     } catch(err) {
-        console.log(err.message);
         res.json({
             success: false,
             errorFields: {},            
@@ -50,4 +51,16 @@ userRoutes.get('/info/:id', (req, res) => {
         res.json(result);
     })
 });
+
+userRoutes.get('/invitations', checkAuth, (req, res) => {
+    getInvitations(req.body.user).then((results) => {
+        res.json(results);
+    }).catch((err: Error) => {
+        res.json({
+            success: false,
+            reason: err.message
+        });
+    });
+})
+
 export {userRoutes};

@@ -64,10 +64,13 @@ export default class ProjectCreate extends React.Component<ProjectCreateProps, P
         this.setState({manager: value})
         const re = new RegExp(value, 'i');
         const isMatch = result => re.test(result.username);
-        const filteredResults = this.props.members.filter(isMatch).map((member) => {
+        const filteredAdmins = this.props.admins.filter(isMatch).map((member) => {
             return {title: member.username, value: member.id}
         });
-        this.setState({results: filteredResults});
+        const filteredMembers = this.props.members.filter(isMatch).map((member) => {
+            return {title: member.username, value: member.id}
+        });
+        this.setState({results: [...filteredAdmins, ...filteredMembers]});
     }
 
     handleSelection(event, data) {
@@ -79,6 +82,7 @@ export default class ProjectCreate extends React.Component<ProjectCreateProps, P
         return(
             <Modal
                 size='small'
+                onClose={() => this.setState({open: false})}
                 open={this.state.open}
                 trigger={<Menu.Item name='Create Project' onClick={() => this.setState({open: true})}/>}
             >
@@ -90,6 +94,7 @@ export default class ProjectCreate extends React.Component<ProjectCreateProps, P
                             <Input name="Name" onChange={(event, data) => {this.setState({name: data.value})}}/>
                         </Form.Field>
                         <Form.Field>
+                            <label>Project Manager</label>
                             <Search
                                 members={this.props.members}
                                 results={this.state.results}

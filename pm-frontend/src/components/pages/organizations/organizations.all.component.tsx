@@ -28,6 +28,8 @@ export default class OrgsView extends React.Component<OrgsViewProps, {}> {
     componentWillMount() {
         if(!this.props.fetching) {
                 this.props.getOrgs('owner');
+                this.props.getOrgs('admin');
+                this.props.getOrgs('member');
         }
     }
 
@@ -57,7 +59,7 @@ export default class OrgsView extends React.Component<OrgsViewProps, {}> {
             let memberList = [];
             for(let organization of this.props.member) {
                 memberList.push(
-                    <Card key={organization.id}>
+                    <Card key={organization.id} onClick={() => this.props.gotToCurrent(organization.id)}>
                         <Card.Content><Card.Header>{organization.name}</Card.Header></Card.Content>
                         <Card.Content>
                             {organization.description}
@@ -68,10 +70,9 @@ export default class OrgsView extends React.Component<OrgsViewProps, {}> {
         }
         if(this.props.admin.length > 0) {
             let adminList = [];
-            for(let organization of this.props.member) {
-                console.log(organization);
+            for(let organization of this.props.admin) {
                 adminList.push(
-                    <Card key={organization.id}>
+                    <Card key={organization.id} onClick={() => this.props.gotToCurrent(organization.id)}>
                         <Card.Content><Card.Header>{organization.name}</Card.Header></Card.Content>
                         <Card.Content>
                             {organization.description}

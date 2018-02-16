@@ -3,11 +3,12 @@ import configure from 'redux-idle-monitor';
 
 export interface State {
     app: {
-        user: UserState,
-        register: RegisterState,
-        notifications: NotificationsState,
-        organizations: OrganizationsState,
-        current: OrganizationsCurrentState
+        user: UserState;
+        register: RegisterState;
+        notifications: NotificationsState;
+        organizations: OrganizationsState;
+        current: OrganizationsCurrentState;
+        invitations: InvitationsState;
     }
     router: RouterState
 }
@@ -52,11 +53,17 @@ export interface OrganizationsCurrentState {
     name: string;
     owner: string;
     description: string;
-    projects: string[];
+    projects: {name?: string, id: string}[];
     gotInfo: {
         members: boolean;
         admins: boolean;
     }
     members: {userId: string; name: string}[] | string[];
     admins: {userId: string; name: string| null}[];
+    permissions: Number
+}
+
+export interface InvitationsState {
+    fetching: boolean;
+    invitations: any[]
 }

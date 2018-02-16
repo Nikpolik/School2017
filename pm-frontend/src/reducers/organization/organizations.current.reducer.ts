@@ -14,7 +14,8 @@ const initialState: OrganizationsCurrentState = {
     gotInfo: {
         admins: false,
         members: false
-    }
+    },
+    permissions: 0
 }
 
 export default function OrganizationsCurrentReducer(state = initialState, action) {

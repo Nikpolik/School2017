@@ -20,6 +20,7 @@ export default class NavBar extends React.Component<NavBarProps, {}> {
             return(
             <Menu.Menu position={"right"}>
                 <Menu.Item name='login'>{this.props.name}</Menu.Item>
+                <Menu.Item link onClick={() => this.props.push('/invitations')}>Invitations</Menu.Item>
                 <Menu.Item link onClick={()=>this.props.logout()}>Logout</Menu.Item>
             </Menu.Menu>
             );

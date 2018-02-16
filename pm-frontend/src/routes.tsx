@@ -8,6 +8,8 @@ import PrivateRoute from './containers/navigation/private-route.container'
 import OrgsView from './containers/organizations/organizations.all.container';
 import OrgsCurrent from './containers/organizations/organizations.current.container';
 import Landing from './components/pages/static/landing.component';
+import Invitations from './containers/invitations/invitations.container';
+
 
 const Routes: React.StatelessComponent = () => {
     return(
@@ -15,7 +17,8 @@ const Routes: React.StatelessComponent = () => {
             <PublicRoute redirectPath={'/'} path='/login' component={LoginContainer}/>
             <PublicRoute redirectPath={'/'} path='/register' component={Register}/>
             <PrivateRoute redirectPath={'/login'} exact path='/' component={OrgsView}/>       
-            <PrivateRoute redirectPath={'/login'} exact path='/current' component={OrgsCurrent}/>      
+            <PrivateRoute redirectPath={'/login'} exact path='/current' component={OrgsCurrent}/>
+            <PrivateRoute redirectPath={'/login'} exact path='/invitations' component={Invitations}/>
         </Switch>
     );
 }

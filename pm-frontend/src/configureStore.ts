@@ -38,8 +38,7 @@ store.subscribe(() => {
   localStorage.setItem('token', state.app.user.token);
   localStorage.setItem('refreshToken', state.app.user.refreshToken);
   localStorage.setItem('name', state.app.user.name);
-  if(state.app.user.expiresIn && !state.app.user.startedLogin) {
-    localStorage.setItem('expiresIn', state.app.user.expiresIn.getTime().toString());    
+  if(state.app.user.expiresIn !== null && !state.app.user.startedLogin) {
     store.dispatch(refresh());
   }
 });

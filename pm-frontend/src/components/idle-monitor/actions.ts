@@ -5,9 +5,9 @@ import * as notificationsActions from '../../actions/helpers/notifications.actio
 
 export const idleStatusDelay = (idleStatus: any) => (dispatch:any, getState:any) => {
   if(idleStatus === IDLESTATUS_AWAY)
-    return 60000 // User becomes away after 60 seconds inactivity
+    return 1000 * 60 * 5 // milliseconds * seconds * minutes
   if(idleStatus === IDLESTATUS_EXPIRED)
-    return 100000 // Log them out after ten minutes after they enter the inactive status
+    return 1000 * 60 * 20 // milliseconds * seconds * minutes
 }
 
 export const activeStatusAction = (dispatch: any, getState: any) => dispatch(notificationsActions.notify('Welcome back!', "positive"));   
